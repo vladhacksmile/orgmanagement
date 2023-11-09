@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum Status {
     OK(1),
     NOT_FOUND(2),
-    INTERNAL_ERROR(3);
+    INTERNAL_ERROR(3),
+    INCORRECT_PARAMS(4);
 
     private final int id;
 

@@ -2,16 +2,20 @@ package com.vladhacksmile.orgmanagement.model.result;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class SearchResult<T> {
-    private Status status;
-    private String description;
-    private Integer pageNum;
+    private List<T> objects;
     private Integer pageSize;
+    private Integer pageNum;
     private Integer pageTotal;
-    private T object;
+
+    public static <T> SearchResult<T> makeSearchResult(List<T> objects, Integer pageNum, Integer pageTotal) {
+        return new SearchResult<>(objects, objects.size(), pageNum, pageTotal);
+    }
 }

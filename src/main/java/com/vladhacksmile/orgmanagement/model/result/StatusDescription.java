@@ -1,0 +1,17 @@
+package com.vladhacksmile.orgmanagement.model.result;
+
+public enum StatusDescription {
+    ID_MUST_BE_NULL,
+    ID_IS_NULL,
+    ORGANIZATION_IS_NULL,
+    COORDINATES_NOT_FOUND,
+    ADDRESS_IS_NULL,
+    ADDRESS_NOT_FOUND,
+    COORDINATES_IS_NULL,
+    COORDINATES_ID_IS_NULL,
+    ADDRESS_ID_IS_NULL,
+    NAME_IS_NULL,
+    ORGANIZATION_TYPE_IS_NULL,
+    ANNUAL_TURNOVER_IS_NULL,
+    ORGANIZATION_NOT_FOUND
+}

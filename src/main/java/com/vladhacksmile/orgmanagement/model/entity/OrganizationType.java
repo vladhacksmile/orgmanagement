@@ -1,9 +1,15 @@
 package com.vladhacksmile.orgmanagement.model.entity;
 
 public enum OrganizationType {
-    PUBLIC,
-    GOVERNMENT,
-    TRUST,
-    PRIVATE_LIMITED_COMPANY,
-    OPEN_JOINT_STOCK_COMPANY;
+    PUBLIC(1),
+    GOVERNMENT(2),
+    TRUST(3),
+    PRIVATE_LIMITED_COMPANY(4),
+    OPEN_JOINT_STOCK_COMPANY(5);
+
+    private int id;
+
+    OrganizationType(int id) {
+        this.id = id;
+    }
 }

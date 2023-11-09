@@ -25,15 +25,19 @@ public class Result<T> {
         return new Result<>(Status.OK, object);
     }
 
-    public static <T> Result<T> createWithNotFound(T object) {
-        return new Result<>(Status.NOT_FOUND, object);
+    public static <T> Result<T> createWithStatusAndDesc(Status status, String description) {
+        return new Result<>(status, description, null);
+    }
+
+    public static <T> Result<T> createWithStatusAndDesc(Status status, StatusDescription statusDescription) {
+        return new Result<>(status, statusDescription.name(), null);
     }
 
     public static <T> Result<T> createWithStatusAndDesc(Status status, String description, T object) {
-        return new Result<>(Status.OK, object);
+        return new Result<>(status, object);
     }
 
-    public static <T> Result<T> createWithStatus(Status status, T object) {
-        return new Result<>(Status.OK, object);
+    public static <T> Result<T> createWithStatus(Status status) {
+        return new Result<>(status);
     }
 }
