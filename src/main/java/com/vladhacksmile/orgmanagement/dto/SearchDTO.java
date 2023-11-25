@@ -1,14 +1,12 @@
 package com.vladhacksmile.orgmanagement.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class SearchDTO {
     private Integer pageNum;
     private Integer pageSize;

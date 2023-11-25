@@ -1,0 +1,17 @@
+package com.vladhacksmile.orgmanagement.dto;
+
+import lombok.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class EmployeeDTO {
+    private Long id;
+    private String userName;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private Long organizationId;
+}
