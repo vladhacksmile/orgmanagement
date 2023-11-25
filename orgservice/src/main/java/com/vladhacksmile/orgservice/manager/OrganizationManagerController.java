@@ -41,7 +41,7 @@ public class OrganizationManagerController {
     @Path("/acquise/{organizationId1}/{organizationId2}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response hire(@PathParam("organizationId1") Long organizationId1, @PathParam("organizationId2") Long organizationId2) {
+    public Response acquise(@PathParam("organizationId1") Long organizationId1, @PathParam("organizationId2") Long organizationId2) {
         if (organizationId1 == null) {
             throw new IllegalArgumentException("organization 1 is null");
         }
