@@ -171,4 +171,35 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return createWithOk(makeSearchResult(employees, employees.size(), employeesPage.getTotalPages()));
     }
+
+    @Override
+    @Transactional
+    public Result<Integer> migrateEmployees(Long organizationId1, Long organizationId2) {
+        if (organizationId1 == null) {
+            return createWithStatusAndDesc(INCORRECT_PARAMS, FIRST_ORGANIZATION_ID_IS_NULL);
+        }
+
+        if (organizationId2 == null) {
+            return createWithStatusAndDesc(INCORRECT_PARAMS, SECOND_ORGANIZATION_ID_IS_NULL);
+        }
+
+        Organization organization1 = organizationRepository.findById(organizationId1).orElse(null);
+
+        if (organization1 == null) {
+            return createWithStatusAndDesc(NOT_FOUND, FIRST_ORGANIZATION_NOT_FOUND);
+        }
+
+        Organization organization2 = organizationRepository.findById(organizationId2).orElse(null);
+
+        if (organization2 == null) {
+            return createWithStatusAndDesc(NOT_FOUND, SECOND_ORGANIZATION_NOT_FOUND);
+        }
+
+        int updated = employeeRepository.updateOrganizationId(organizationId1, organizationId2);
+        if (updated == 0) {
+            return createWithStatusAndDesc(NOT_FOUND, EMPLOYEES_NOT_FOUND);
+        }
+
+        return createWithOk(updated);
+    }
 }

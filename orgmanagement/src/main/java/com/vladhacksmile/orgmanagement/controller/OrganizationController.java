@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/organizations")
@@ -51,4 +53,23 @@ public class OrganizationController {
     public ResponseEntity<Result<Organization>> delete(@PathVariable Long id) {
         return ResponseMapper.map(organizationService.delete(id));
     }
+
+    @PostMapping("/operations/count-lower-annual-turnover")
+    public ResponseEntity<Result<List<Float>>> countLowerAnnualTurnover(@RequestParam("annual-turnover") Float annualTurnover) {
+        return ResponseMapper.map(organizationService.countLowerAnnualTurnover(annualTurnover));
+    }
+
+    @PostMapping("/operations/count-lower-annual-turnover")
+    public ResponseEntity<Result<List<Float>>> countLowerAnnualTurnover() {
+        return ResponseMapper.map(organizationService.findUniqueAnnualTurnover());
+    }
+    @PostMapping("/operations/find-substring")
+    public ResponseEntity<Result<SearchResult<Organization>>> findSubstring(
+            @RequestParam(name = "page_num", defaultValue = "1") int pageNum,
+            @RequestParam(name = "page_size", defaultValue = "10") int pageSize,
+            @RequestParam(value = "field", defaultValue = "") String field,
+            @RequestParam(value = "substring", defaultValue = "") String substring) {
+        return ResponseMapper.map(organizationService.findSubstring(pageNum, pageSize, field, substring));
+    }
+
 }

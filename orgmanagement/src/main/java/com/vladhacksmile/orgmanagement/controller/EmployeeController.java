@@ -44,4 +44,9 @@ public class EmployeeController {
     public ResponseEntity<Result<Employee>> delete(@PathVariable Long id) {
         return ResponseMapper.map(employeeService.delete(id));
     }
+
+    @PatchMapping("migrate/{organizationId1}/{organizationId2}")
+    public ResponseEntity<Result<Integer>> migrateEmployees(@PathVariable Long organizationId1, @PathVariable Long organizationId2) {
+        return ResponseMapper.map(employeeService.migrateEmployees(organizationId1, organizationId2));
+    }
 }

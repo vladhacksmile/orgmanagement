@@ -202,6 +202,41 @@ public class OrganizationServiceImpl implements OrganizationService {
         return createWithOk(makeSearchResult(organizations, organizations.size(), organizationsPage.getTotalPages()));
     }
 
+    @Override
+    public Result<SearchResult<Organization>> findSubstring(int pageNum, int pageSize, String field, String substring) {
+        if (StringUtils.isEmpty(field)) {
+            return createWithStatusAndDesc(INCORRECT_PARAMS, FIELD_IS_NULL);
+        }
+        if (StringUtils.isEmpty(substring)) {
+            return createWithStatusAndDesc(INCORRECT_PARAMS, SUBSTRING_IS_NULL);
+        }
+        return getAll(pageNum, pageSize, "ASC", null, SearchCriteria.SearchOperation.LIKE.getName(), field, substring);
+    }
+
+    @Override
+    public Result<List<Float>> countLowerAnnualTurnover(Float annualTurnover) {
+        if (annualTurnover == null) {
+            return createWithStatusAndDesc(INCORRECT_PARAMS, ANNUAL_TURNOVER_IS_NULL);
+        }
+
+        List<Float> values = organizationRepository.findAnnualTurnoverLowerThan(annualTurnover);
+        if (CollectionUtils.isEmpty(values)) {
+            return createWithStatus(NOT_FOUND);
+        }
+
+        return createWithOk(values);
+    }
+
+    @Override
+    public Result<List<Float>> findUniqueAnnualTurnover() {
+        List<Float> values = organizationRepository.findUniqueAnnualTurnovers();
+        if (CollectionUtils.isEmpty(values)) {
+            return createWithStatus(NOT_FOUND);
+        }
+
+        return createWithOk(values);
+    }
+
     private boolean validateColumns(String column) {
         return column.equalsIgnoreCase("name") || column.equalsIgnoreCase("annual_turnover")
                 || column.equalsIgnoreCase("type") || column.equalsIgnoreCase("address");

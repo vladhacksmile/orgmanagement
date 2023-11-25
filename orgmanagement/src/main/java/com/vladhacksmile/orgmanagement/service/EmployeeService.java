@@ -11,4 +11,5 @@ public interface EmployeeService {
     Result<Employee> put(EmployeeDTO employeeDTO);
     Result<Employee> delete(Long id);
     Result<SearchResult<Employee>> getAll(int pageNum, int pageSize);
+    Result<Integer> migrateEmployees(Long organizationId1, Long organizationId2);
 }
