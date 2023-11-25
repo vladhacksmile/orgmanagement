@@ -25,6 +25,10 @@ public class Result<T> {
         return new Result<>(Status.OK, object);
     }
 
+    public static <T> Result<T> createWithOk() {
+        return new Result<>(Status.OK, null);
+    }
+
     public static <T> Result<T> createWithStatusAndDesc(Status status, String description) {
         return new Result<>(status, description, null);
     }
@@ -35,6 +39,10 @@ public class Result<T> {
 
     public static <T> Result<T> createWithStatusAndDesc(Status status, String description, T object) {
         return new Result<>(status, object);
+    }
+
+    public boolean isError() {
+        return this.status != Status.OK && this.status != Status.CREATED;
     }
 
     public static <T> Result<T> createWithStatus(Status status) {

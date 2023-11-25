@@ -51,6 +51,23 @@ public class OrganizationClient {
         }
     }
 
+    public Result<Integer> migrateEmployees(Long organizationId1, Long organizationId2) {
+        String url = serviceUrl + "/employees/migrate/" + organizationId1 + "/" + organizationId2;
+        try {
+            client = ClientBuilder.newClient();
+
+            Response response = client.target(url).request(MediaType.APPLICATION_JSON_TYPE).post(null);
+
+            Result<Integer> migrateResult = response.readEntity(new GenericType<>() {});
+
+            client.close();
+
+            return migrateResult;
+        } catch (ProcessingException e) {
+            return null;
+        }
+    }
+
     public Result<Organization> deleteOrganizationById(long id) {
         String url = serviceUrl + "/organizations/" + id;
         try {
