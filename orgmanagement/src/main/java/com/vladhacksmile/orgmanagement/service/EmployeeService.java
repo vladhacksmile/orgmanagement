@@ -6,10 +6,10 @@ import com.vladhacksmile.orgmanagement.model.result.Result;
 import com.vladhacksmile.orgmanagement.model.result.SearchResult;
 
 public interface EmployeeService {
-    Result<Employee> add(EmployeeDTO employeeDTO);
-    Result<Employee> get(Long id);
-    Result<Employee> put(EmployeeDTO employeeDTO);
-    Result<Employee> delete(Long id);
+    Result<EmployeeDTO> add(EmployeeDTO employeeDTO);
+    Result<EmployeeDTO> get(Long id);
+    Result<EmployeeDTO> put(EmployeeDTO employeeDTO);
+    Result<EmployeeDTO> delete(Long id);
     Result<SearchResult<Employee>> getAll(int pageNum, int pageSize);
     Result<Integer> migrateEmployees(Long organizationId1, Long organizationId2);
 }

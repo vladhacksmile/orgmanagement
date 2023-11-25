@@ -1,6 +1,7 @@
 package com.vladhacksmile.orgmanagement.service.impl;
 
 import com.vladhacksmile.orgmanagement.dto.EmployeeDTO;
+import com.vladhacksmile.orgmanagement.mapper.EmployeeMapper;
 import com.vladhacksmile.orgmanagement.model.entity.Employee;
 import com.vladhacksmile.orgmanagement.model.entity.Organization;
 import com.vladhacksmile.orgmanagement.model.result.Result;
@@ -37,7 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public Result<Employee> add(EmployeeDTO employeeDTO) {
+    public Result<EmployeeDTO> add(EmployeeDTO employeeDTO) {
         if (employeeDTO.getId() != null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, ID_MUST_BE_NULL);
         }
@@ -70,11 +71,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = employeeRepository.save(new Employee(null, employeeDTO.getUserName(), employeeDTO.getFirstName(),
                 employeeDTO.getLastName(), employeeDTO.getEmail(), employeeDTO.getOrganizationId()));
 
-        return createWithOk(employee);
+        return createWithOk(EmployeeMapper.fromEntity(employee));
     }
 
     @Override
-    public Result<Employee> get(Long id) {
+    public Result<EmployeeDTO> get(Long id) {
         if (id == null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, ID_IS_NULL);
         }
@@ -84,12 +85,12 @@ public class EmployeeServiceImpl implements EmployeeService {
             return createWithStatusAndDesc(NOT_FOUND, EMPLOYEE_NOT_FOUND);
         }
 
-        return createWithOk(employee);
+        return createWithOk(EmployeeMapper.fromEntity(employee));
     }
 
     @Override
     @Transactional
-    public Result<Employee> put(EmployeeDTO employeeDTO) {
+    public Result<EmployeeDTO> put(EmployeeDTO employeeDTO) {
         if (employeeDTO == null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, EMPLOYEE_IS_NULL);
         }
@@ -130,12 +131,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employee = employeeRepository.save(employee);
 
-        return createWithOk(employee);
+        return createWithOk(EmployeeMapper.fromEntity(employee));
     }
 
     @Override
     @Transactional
-    public Result<Employee> delete(Long id) {
+    public Result<EmployeeDTO> delete(Long id) {
         if (id == null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, ID_IS_NULL);
         }
@@ -148,7 +149,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employeeRepository.deleteById(id);
 
-        return createWithOk(employee);
+        return createWithOk(EmployeeMapper.fromEntity(employee));
     }
 
     @Override

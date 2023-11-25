@@ -7,14 +7,17 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import javax.inject.Inject;
+import javax.naming.NamingException;
 
 @Path("/orgmanager")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class OrganizationManagerController {
 
-    @Inject
-    OrganizationService organizationService;
+//    @Inject
+//    OrganizationService organizationService;
+
+    OrganizationService organizationService = new OrganizationService();
 
     @POST
     @Path("/hire/{id}")

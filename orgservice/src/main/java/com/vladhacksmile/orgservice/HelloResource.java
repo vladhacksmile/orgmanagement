@@ -9,6 +9,14 @@ public class HelloResource {
     @GET
     @Produces("text/plain")
     public String hello() {
-        return "Hello, World!";
+        return "hello";
+    }
+
+    @GET
+    @Path("/hire")
+    @Produces("text/plain")
+    public String hire() {
+
+        return "робит";
     }
 }

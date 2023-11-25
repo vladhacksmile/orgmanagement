@@ -26,22 +26,22 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Result<Employee>> get(@PathVariable Long id) {
+    public ResponseEntity<Result<EmployeeDTO>> get(@PathVariable Long id) {
         return ResponseMapper.map(employeeService.get(id));
     }
 
     @PostMapping
-    public ResponseEntity<Result<Employee>> add(@RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<Result<EmployeeDTO>> add(@RequestBody EmployeeDTO employeeDTO) {
         return ResponseMapper.map(employeeService.add(employeeDTO));
     }
 
     @PutMapping
-    public ResponseEntity<Result<Employee>> put(@RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<Result<EmployeeDTO>> put(@RequestBody EmployeeDTO employeeDTO) {
         return ResponseMapper.map(employeeService.put(employeeDTO));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Result<Employee>> delete(@PathVariable Long id) {
+    public ResponseEntity<Result<EmployeeDTO>> delete(@PathVariable Long id) {
         return ResponseMapper.map(employeeService.delete(id));
     }
 

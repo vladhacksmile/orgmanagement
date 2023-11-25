@@ -2,18 +2,19 @@ package com.vladhacksmile.orgservice.service;
 
 import com.vladhacksmile.orgservice.integration.OrganizationClient;
 import com.vladhacksmile.orgservice.model.entity.Employee;
-import com.vladhacksmile.orgservice.model.entity.Organization;
+import com.vladhacksmile.orgservice.model.entity.OrganizationDTO;
 import com.vladhacksmile.orgservice.model.result.Result;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 import static com.vladhacksmile.orgservice.model.result.Result.createWithOk;
 
 @ApplicationScoped
 public class OrganizationService {
-    @Inject
-    private OrganizationClient organizationClient;
+//    @Inject
+//    private OrganizationClient organizationClient;
+
+    OrganizationClient organizationClient = new OrganizationClient();
 
     public Result<?> hire(Long organizationId, Employee employee) {
         employee.setOrganizationId(organizationId);
@@ -31,7 +32,7 @@ public class OrganizationService {
             throw new IllegalArgumentException(migrateEmployeesResult.getDescription());
         }
 
-        Result<Organization> deleteteOrganizationResult = organizationClient.deleteOrganizationById(organizationId1);
+        Result<OrganizationDTO> deleteteOrganizationResult = organizationClient.deleteOrganizationById(organizationId1);
         if (deleteteOrganizationResult.isError()) {
             throw new IllegalArgumentException(deleteteOrganizationResult.getDescription());
         }

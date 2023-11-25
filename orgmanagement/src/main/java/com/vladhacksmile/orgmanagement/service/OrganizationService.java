@@ -8,10 +8,10 @@ import com.vladhacksmile.orgmanagement.model.result.SearchResult;
 import java.util.List;
 
 public interface OrganizationService {
-    Result<Organization> add(OrganizationDTO organizationDTO);
-    Result<Organization> get(Long id);
-    Result<Organization> put(OrganizationDTO organizationDTO);
-    Result<Organization> delete(Long id);
+    Result<OrganizationDTO> add(OrganizationDTO organizationDTO);
+    Result<OrganizationDTO> get(Long id);
+    Result<OrganizationDTO> put(OrganizationDTO organizationDTO);
+    Result<OrganizationDTO> delete(Long id);
     Result<SearchResult<Organization>> getAll(int pageNum, int pageSize, String sortType, String sortColumn,
                                               String filterOperation, String filterField, String filterValue);
 

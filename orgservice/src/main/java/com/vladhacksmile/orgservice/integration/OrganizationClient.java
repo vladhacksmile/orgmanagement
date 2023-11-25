@@ -1,7 +1,7 @@
 package com.vladhacksmile.orgservice.integration;
 
 import com.vladhacksmile.orgservice.model.entity.Employee;
-import com.vladhacksmile.orgservice.model.entity.Organization;
+import com.vladhacksmile.orgservice.model.entity.OrganizationDTO;
 import com.vladhacksmile.orgservice.model.result.Result;
 import jakarta.ejb.Stateless;
 import jakarta.ws.rs.ProcessingException;
@@ -15,16 +15,16 @@ import jakarta.ws.rs.core.Response;
 @Stateless
 public class OrganizationClient {
     private Client client;
-    private final String serviceUrl = "https://localhost:8080/api/v1";
+    private final String serviceUrl = "http://localhost:8080";
 
-    public Result<Organization> getOrganizationById(long id) {
+    public Result<OrganizationDTO> getOrganizationById(long id) {
         String url = serviceUrl + "/organizations/" + id;
         try {
             client = ClientBuilder.newClient();
 
             Response response = client.target(url).request(MediaType.APPLICATION_JSON_TYPE).get();
 
-            Result<Organization> organizationResult = response.readEntity(new GenericType<>() {});
+            Result<OrganizationDTO> organizationResult = response.readEntity(new GenericType<>() {});
 
             client.close();
 
@@ -35,7 +35,7 @@ public class OrganizationClient {
     }
 
     public Result<Employee> addEmployee(Employee employee) {
-        String url = serviceUrl + "/employees/";
+        String url = serviceUrl + "/employees";
         try {
             client = ClientBuilder.newClient();
 
@@ -68,14 +68,14 @@ public class OrganizationClient {
         }
     }
 
-    public Result<Organization> deleteOrganizationById(long id) {
+    public Result<OrganizationDTO> deleteOrganizationById(long id) {
         String url = serviceUrl + "/organizations/" + id;
         try {
             client = ClientBuilder.newClient();
 
             Response response = client.target(url).request(MediaType.APPLICATION_JSON_TYPE).delete();
 
-            Result<Organization> organizationResult = response.readEntity(new GenericType<>() {});
+            Result<OrganizationDTO> organizationResult = response.readEntity(new GenericType<>() {});
 
             client.close();
 

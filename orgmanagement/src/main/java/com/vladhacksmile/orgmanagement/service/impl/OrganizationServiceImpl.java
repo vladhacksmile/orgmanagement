@@ -1,6 +1,7 @@
 package com.vladhacksmile.orgmanagement.service.impl;
 
 import com.vladhacksmile.orgmanagement.dto.OrganizationDTO;
+import com.vladhacksmile.orgmanagement.mapper.OrganizationsMapper;
 import com.vladhacksmile.orgmanagement.model.entity.Organization;
 import com.vladhacksmile.orgmanagement.model.result.Result;
 import com.vladhacksmile.orgmanagement.model.result.SearchResult;
@@ -33,9 +34,11 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Autowired
     private OrganizationRepository organizationRepository;
 
+
+
     @Override
     @Transactional
-    public Result<Organization> add(OrganizationDTO organizationDTO) {
+    public Result<OrganizationDTO> add(OrganizationDTO organizationDTO) {
         if (organizationDTO.getId() != null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, ID_MUST_BE_NULL);
         }
@@ -69,11 +72,11 @@ public class OrganizationServiceImpl implements OrganizationService {
                 organizationDTO.getCoordinateY(), ZonedDateTime.now(), organizationDTO.getAnnualTurnover(),
                 organizationDTO.getType(), organizationDTO.getOfficialAddress()));
 
-        return createWithOk(organization);
+        return createWithOk(OrganizationsMapper.fromEntity(organization));
     }
 
     @Override
-    public Result<Organization> get(Long id) {
+    public Result<OrganizationDTO> get(Long id) {
         if (id == null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, ID_IS_NULL);
         }
@@ -83,12 +86,12 @@ public class OrganizationServiceImpl implements OrganizationService {
             return createWithStatusAndDesc(NOT_FOUND, ORGANIZATION_NOT_FOUND);
         }
 
-        return createWithOk(organization);
+        return createWithOk(OrganizationsMapper.fromEntity(organization));
     }
 
     @Override
     @Transactional
-    public Result<Organization> put(OrganizationDTO organizationDTO) {
+    public Result<OrganizationDTO> put(OrganizationDTO organizationDTO) {
         if (organizationDTO == null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, ORGANIZATION_IS_NULL);
         }
@@ -129,12 +132,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         organizationRepository.save(organization);
 
-        return createWithOk(organization);
+        return createWithOk(OrganizationsMapper.fromEntity(organization));
     }
 
     @Override
     @Transactional
-    public Result<Organization> delete(Long id) {
+    public Result<OrganizationDTO> delete(Long id) {
         if (id == null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, ID_IS_NULL);
         }
@@ -147,7 +150,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         organizationRepository.deleteById(id);
 
-        return createWithOk(organization);
+        return createWithOk(OrganizationsMapper.fromEntity(organization));
     }
 
     @Override

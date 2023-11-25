@@ -35,22 +35,22 @@ public class OrganizationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Result<Organization>> get(@PathVariable Long id) {
+    public ResponseEntity<Result<OrganizationDTO>> get(@PathVariable Long id) {
         return ResponseMapper.map(organizationService.get(id));
     }
 
     @PostMapping
-    public ResponseEntity<Result<Organization>> add(@RequestBody OrganizationDTO organizationDTO) {
+    public ResponseEntity<Result<OrganizationDTO>> add(@RequestBody OrganizationDTO organizationDTO) {
         return ResponseMapper.map(organizationService.add(organizationDTO));
     }
 
     @PutMapping
-    public ResponseEntity<Result<Organization>> put(@RequestBody OrganizationDTO organizationDTO) {
+    public ResponseEntity<Result<OrganizationDTO>> put(@RequestBody OrganizationDTO organizationDTO) {
         return ResponseMapper.map(organizationService.put(organizationDTO));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Result<Organization>> delete(@PathVariable Long id) {
+    public ResponseEntity<Result<OrganizationDTO>> delete(@PathVariable Long id) {
         return ResponseMapper.map(organizationService.delete(id));
     }
 
