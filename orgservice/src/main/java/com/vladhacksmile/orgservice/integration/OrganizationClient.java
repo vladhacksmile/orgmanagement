@@ -1,11 +1,13 @@
 package com.vladhacksmile.orgservice.integration;
 
+import com.vladhacksmile.orgservice.model.entity.Employee;
 import com.vladhacksmile.orgservice.model.entity.Organization;
 import com.vladhacksmile.orgservice.model.result.Result;
 import jakarta.ejb.Stateless;
 import jakarta.ws.rs.ProcessingException;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -27,6 +29,23 @@ public class OrganizationClient {
             client.close();
 
             return organizationResult;
+        } catch (ProcessingException e) {
+            return null;
+        }
+    }
+
+    public Result<Employee> addEmployee(Employee employee) {
+        String url = serviceUrl + "/employees/";
+        try {
+            client = ClientBuilder.newClient();
+
+            Response response = client.target(url).request(MediaType.APPLICATION_JSON_TYPE).post(Entity.json(employee));
+
+            Result<Employee> employeeResult = response.readEntity(new GenericType<>() {});
+
+            client.close();
+
+            return employeeResult;
         } catch (ProcessingException e) {
             return null;
         }

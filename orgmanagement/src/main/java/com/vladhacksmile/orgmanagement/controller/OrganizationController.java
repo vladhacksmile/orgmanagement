@@ -59,10 +59,11 @@ public class OrganizationController {
         return ResponseMapper.map(organizationService.countLowerAnnualTurnover(annualTurnover));
     }
 
-    @PostMapping("/operations/count-lower-annual-turnover")
+    @PostMapping("/operations/unique-annual-turnovers")
     public ResponseEntity<Result<List<Float>>> countLowerAnnualTurnover() {
         return ResponseMapper.map(organizationService.findUniqueAnnualTurnover());
     }
+
     @PostMapping("/operations/find-substring")
     public ResponseEntity<Result<SearchResult<Organization>>> findSubstring(
             @RequestParam(name = "page_num", defaultValue = "1") int pageNum,
