@@ -14,8 +14,9 @@ public class SearchResult<T> {
     private Integer pageSize;
     private Integer pageNum;
     private Integer pageTotal;
+    private Long totalElements;
 
-    public static <T> SearchResult<T> makeSearchResult(List<T> objects, Integer pageNum, Integer pageTotal) {
-        return new SearchResult<>(objects, objects.size(), pageNum, pageTotal);
+    public static <T> SearchResult<T> makeSearchResult(List<T> objects, Integer pageNum, Integer pageTotal, Long totalElements) {
+        return new SearchResult<>(objects, objects.size(), pageNum, pageTotal, totalElements);
     }
 }

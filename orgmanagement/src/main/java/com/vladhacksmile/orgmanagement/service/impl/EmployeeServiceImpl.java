@@ -170,7 +170,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             return createWithStatusAndDesc(NOT_FOUND, EMPLOYEE_NOT_FOUND);
         }
 
-        return createWithOk(makeSearchResult(employees, employees.size(), employeesPage.getTotalPages()));
+        return createWithOk(makeSearchResult(employees, employees.size(), employeesPage.getTotalPages(), employeesPage.getTotalElements()));
     }
 
     @Override

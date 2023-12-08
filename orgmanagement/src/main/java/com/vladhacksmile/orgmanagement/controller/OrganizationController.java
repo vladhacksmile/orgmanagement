@@ -56,12 +56,12 @@ public class OrganizationController {
     }
 
     @PostMapping("/operations/count-lower-annual-turnover")
-    public ResponseEntity<Result<List<Float>>> countLowerAnnualTurnover(@RequestParam("annual-turnover") Float annualTurnover) {
+    public ResponseEntity<Result<Integer>> countLowerAnnualTurnover(@RequestParam("annual-turnover") Float annualTurnover) {
         return ResponseMapper.map(organizationService.countLowerAnnualTurnover(annualTurnover));
     }
 
     @PostMapping("/operations/unique-annual-turnovers")
-    public ResponseEntity<Result<List<Float>>> countLowerAnnualTurnover() {
+    public ResponseEntity<Result<List<Float>>> uniqueLowerAnnualTurnover() {
         return ResponseMapper.map(organizationService.findUniqueAnnualTurnover());
     }
 

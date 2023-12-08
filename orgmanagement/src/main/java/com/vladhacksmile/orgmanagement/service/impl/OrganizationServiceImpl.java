@@ -107,7 +107,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
 
         if (!Objects.equals(organization.getName(), organizationDTO.getName())) {
-            organization.setName(organization.getName());
+            organization.setName(organizationDTO.getName());
         }
 
         if (!Objects.equals(organization.getAnnualTurnover(), organizationDTO.getAnnualTurnover())) {
@@ -202,7 +202,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             return createWithStatusAndDesc(NOT_FOUND, ORGANIZATION_NOT_FOUND);
         }
 
-        return createWithOk(makeSearchResult(organizations, organizations.size(), organizationsPage.getTotalPages()));
+        return createWithOk(makeSearchResult(organizations, organizations.size(), organizationsPage.getTotalPages(), organizationsPage.getTotalElements()));
     }
 
     @Override
@@ -217,7 +217,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public Result<List<Float>> countLowerAnnualTurnover(Float annualTurnover) {
+    public Result<Integer> countLowerAnnualTurnover(Float annualTurnover) {
         if (annualTurnover == null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, ANNUAL_TURNOVER_IS_NULL);
         }
@@ -227,7 +227,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             return createWithStatus(NOT_FOUND);
         }
 
-        return createWithOk(values);
+        return createWithOk(values.size());
     }
 
     @Override
