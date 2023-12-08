@@ -27,7 +27,7 @@ public class OrganizationController {
             @RequestParam(name = "page_num", defaultValue = "1") int pageNum,
             @RequestParam(name = "page_size", defaultValue = "10") int pageSize,
             @RequestParam(name = "sort_type", defaultValue = "ASC") String sortType,
-            @RequestParam(value = "sort_column", defaultValue = "") String sortColumn,
+            @RequestParam(value = "sort_column", defaultValue = "ID") String sortColumn,
             @RequestParam(value = "filter_operation", defaultValue = "") String filterOperation,
             @RequestParam(value = "filter_field", defaultValue = "") String filterField,
             @RequestParam(value = "filter_value", defaultValue = "") String filterValue) {

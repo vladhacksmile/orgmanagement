@@ -34,8 +34,6 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Autowired
     private OrganizationRepository organizationRepository;
 
-
-
     @Override
     @Transactional
     public Result<OrganizationDTO> add(OrganizationDTO organizationDTO) {
@@ -186,16 +184,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
         Page<Organization> organizationsPage;
-        if (StringUtils.isNotEmpty(filterField) && searchOperation != null) {
-            SearchCriteria searchCriteria = new SearchCriteria();
-            searchCriteria.setReverseSort(sortType.equalsIgnoreCase("DESC"));
-            searchCriteria.setSearchOperation(searchOperation);
-            searchCriteria.setObject(filterField);
-            searchCriteria.setValue(filterValue);
-            organizationsPage = organizationRepository.findAll(new OrganizationSpecification(searchCriteria), pageable);
-        } else {
-            organizationsPage = organizationRepository.findAll(pageable);
-        }
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setReverseSort(sortType.equalsIgnoreCase("DESC"));
+        searchCriteria.setSearchOperation(searchOperation);
+        searchCriteria.setObject(filterField);
+        searchCriteria.setValue(filterValue);
+        organizationsPage = organizationRepository.findAll(new OrganizationSpecification(searchCriteria), pageable);
 
         List<Organization> organizations = organizationsPage.stream().toList();
         if (CollectionUtils.isEmpty(organizations)) {
@@ -241,7 +235,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     private boolean validateColumns(String column) {
-        return column.equalsIgnoreCase("name") || column.equalsIgnoreCase("annual_turnover")
+        return column.equalsIgnoreCase("id") || column.equalsIgnoreCase("name") || column.equalsIgnoreCase("annual_turnover")
                 || column.equalsIgnoreCase("type") || column.equalsIgnoreCase("address");
     }
 }
