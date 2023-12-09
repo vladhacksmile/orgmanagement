@@ -115,11 +115,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         if (!Objects.equals(employee.getUserName(), employeeDTO.getUserName())) {
-            employee.setUserName(employee.getUserName());
+            employee.setUserName(employeeDTO.getUserName());
         }
 
         if (!Objects.equals(employee.getEmail(), employeeDTO.getEmail())) {
-            employee.setEmail(employee.getEmail());
+            employee.setEmail(employeeDTO.getEmail());
         }
 
         if (!Objects.equals(employee.getOrganizationId(), employeeDTO.getOrganizationId())) {
