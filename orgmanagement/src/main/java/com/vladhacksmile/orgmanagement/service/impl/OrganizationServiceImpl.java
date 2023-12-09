@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -181,8 +182,9 @@ public class OrganizationServiceImpl implements OrganizationService {
                 return createWithStatusAndDesc(NOT_FOUND, FILTER_OPERATION_NOT_FOUND);
             }
         }
-
-        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+        boolean defaultSort = sortType.equalsIgnoreCase("ASC");
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
+                StringUtils.isNotEmpty(sortColumn) ? Sort.by(defaultSort ? Sort.Direction.ASC : Sort.Direction.DESC, sortColumn) : Sort.unsorted());
         Page<Organization> organizationsPage;
         SearchCriteria searchCriteria = new SearchCriteria();
         searchCriteria.setReverseSort(sortType.equalsIgnoreCase("DESC"));
@@ -235,7 +237,10 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     private boolean validateColumns(String column) {
-        return column.equalsIgnoreCase("id") || column.equalsIgnoreCase("name") || column.equalsIgnoreCase("annual_turnover")
-                || column.equalsIgnoreCase("type") || column.equalsIgnoreCase("address");
+        return column.equalsIgnoreCase("id") || column.equalsIgnoreCase("name") ||
+                column.equalsIgnoreCase("coordinateX") || column.equalsIgnoreCase("coordinateY")
+                || column.equalsIgnoreCase("annualTurnover")
+                || column.equalsIgnoreCase("creationDate")
+                || column.equalsIgnoreCase("type") || column.equalsIgnoreCase("officialAddress");
     }
 }
