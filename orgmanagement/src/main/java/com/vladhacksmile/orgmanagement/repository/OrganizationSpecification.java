@@ -1,6 +1,7 @@
 package com.vladhacksmile.orgmanagement.repository;
 
 import com.vladhacksmile.orgmanagement.model.entity.Organization;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,28 +19,33 @@ public class OrganizationSpecification implements Specification<Organization> {
 
     @Override
     public Predicate toPredicate(Root<Organization> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-        switch (searchCriteria.getSearchOperation()) {
-            case GREATER -> {
-                return builder.greaterThan(root.get(searchCriteria.getObject()), searchCriteria.getValue());
-            }
-            case LESS -> {
-                return builder.lessThan(root.get(searchCriteria.getObject()), searchCriteria.getValue());
-            }
-            case LIKE -> {
-                return builder.like(builder.lower(root.get(searchCriteria.getObject())), "%" + searchCriteria.getValue() + "%");
-            }
-            case EQUAL -> {
-                return builder.equal(root.get(searchCriteria.getObject()), searchCriteria.getValue());
-            }
-            case GREATER_OR_EQUAL -> {
-                return builder.greaterThanOrEqualTo(root.get(searchCriteria.getObject()), searchCriteria.getValue());
-            }
-            case LESS_OR_EQUAL -> {
-                return builder.lessThanOrEqualTo(root.get(searchCriteria.getObject()), searchCriteria.getValue());
-            }
-            default -> {
-                return null;
+        if (searchCriteria.getSearchOperation() != null && StringUtils.isNotEmpty(searchCriteria.getObject()) && StringUtils.isNotEmpty(searchCriteria.getValue())) {
+            String lowerObject = searchCriteria.getObject().toLowerCase();
+            String lowerValue = searchCriteria.getValue().toLowerCase();
+            switch (searchCriteria.getSearchOperation()) {
+                case GREATER -> {
+                    return builder.greaterThan(root.get(lowerObject), lowerValue);
+                }
+                case LESS -> {
+                    return builder.lessThan(root.get(lowerObject), lowerValue);
+                }
+                case LIKE -> {
+                    return builder.like(root.get(lowerObject), lowerValue);
+                }
+                case EQUAL -> {
+                    return builder.equal(root.get(lowerObject), lowerValue);
+                }
+                case GREATER_OR_EQUAL -> {
+                    return builder.greaterThanOrEqualTo(root.get(lowerObject), lowerValue);
+                }
+                case LESS_OR_EQUAL -> {
+                    return builder.lessThanOrEqualTo(root.get(lowerObject), lowerValue);
+                }
+                default -> {
+                    return null;
+                }
             }
         }
+        return null;
     }
 }

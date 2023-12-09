@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -33,8 +34,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Autowired
     private OrganizationRepository organizationRepository;
-
-
 
     @Override
     @Transactional
@@ -183,19 +182,16 @@ public class OrganizationServiceImpl implements OrganizationService {
                 return createWithStatusAndDesc(NOT_FOUND, FILTER_OPERATION_NOT_FOUND);
             }
         }
-
-        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+        boolean defaultSort = sortType.equalsIgnoreCase("ASC");
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
+                StringUtils.isNotEmpty(sortColumn) ? Sort.by(defaultSort ? Sort.Direction.ASC : Sort.Direction.DESC, sortColumn) : Sort.unsorted());
         Page<Organization> organizationsPage;
-        if (StringUtils.isNotEmpty(filterField) && searchOperation != null) {
-            SearchCriteria searchCriteria = new SearchCriteria();
-            searchCriteria.setReverseSort(sortType.equalsIgnoreCase("DESC"));
-            searchCriteria.setSearchOperation(searchOperation);
-            searchCriteria.setObject(filterField);
-            searchCriteria.setValue(filterValue);
-            organizationsPage = organizationRepository.findAll(new OrganizationSpecification(searchCriteria), pageable);
-        } else {
-            organizationsPage = organizationRepository.findAll(pageable);
-        }
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setReverseSort(sortType.equalsIgnoreCase("DESC"));
+        searchCriteria.setSearchOperation(searchOperation);
+        searchCriteria.setObject(filterField);
+        searchCriteria.setValue(filterValue);
+        organizationsPage = organizationRepository.findAll(new OrganizationSpecification(searchCriteria), pageable);
 
         List<Organization> organizations = organizationsPage.stream().toList();
         if (CollectionUtils.isEmpty(organizations)) {
@@ -241,7 +237,10 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     private boolean validateColumns(String column) {
-        return column.equalsIgnoreCase("name") || column.equalsIgnoreCase("annual_turnover")
-                || column.equalsIgnoreCase("type") || column.equalsIgnoreCase("address");
+        return column.equalsIgnoreCase("id") || column.equalsIgnoreCase("name") ||
+                column.equalsIgnoreCase("coordinateX") || column.equalsIgnoreCase("coordinateY")
+                || column.equalsIgnoreCase("annualTurnover")
+                || column.equalsIgnoreCase("creationDate")
+                || column.equalsIgnoreCase("type") || column.equalsIgnoreCase("officialAddress");
     }
 }
