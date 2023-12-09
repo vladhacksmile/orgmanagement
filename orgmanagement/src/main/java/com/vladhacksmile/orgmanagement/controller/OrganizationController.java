@@ -24,7 +24,7 @@ public class OrganizationController {
 
     @GetMapping("/hello")
     public String hello() {
-        return "hello";
+        return "hello from 1";
     }
 
     @GetMapping

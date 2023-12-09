@@ -14,6 +14,8 @@ public class OrganizationService {
 
     OrganizationClient organizationClient = new OrganizationClient();
 
+
+
     public Result<?> hire(Long organizationId, Employee employee) {
         employee.setOrganizationId(organizationId);
         Result<Employee> employeeAddResult = organizationClient.addEmployee(employee);
