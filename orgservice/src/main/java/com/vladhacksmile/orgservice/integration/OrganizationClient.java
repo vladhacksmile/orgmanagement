@@ -15,7 +15,7 @@ import jakarta.ws.rs.core.Response;
 @Stateless
 public class OrganizationClient {
     private Client client;
-    private final String serviceUrl = "http://localhost:8080";
+    private final String serviceUrl = "https://localhost:8080";
 
     public Result<OrganizationDTO> getOrganizationById(long id) {
         String url = serviceUrl + "/organizations/" + id;
