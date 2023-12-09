@@ -22,6 +22,11 @@ public class OrganizationController {
     @Autowired
     private OrganizationService organizationService;
 
+    @GetMapping("/hello")
+    public String hello() {
+        return "hello from 1";
+    }
+
     @GetMapping
     public ResponseEntity<Result<SearchResult<Organization>>> getAll(
             @RequestParam(name = "page_num", defaultValue = "1") int pageNum,
