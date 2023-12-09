@@ -22,7 +22,7 @@ import java.security.KeyStore;
 @Stateless
 public class OrganizationClient {
     private Client client;
-    private final String serviceUrl = "http://localhost:8080";
+    private final String serviceUrl = "https://localhost:8080";
 
     public static SSLContext createSSLContext(String truststorePath, String truststorePassword) throws Exception {
         KeyStore truststore = KeyStore.getInstance("PKCS12");
@@ -49,6 +49,17 @@ public class OrganizationClient {
         return ClientBuilder.newBuilder()
                 .sslContext(sslContext)
                 .build();
+    }
+
+    public Response getHello(){
+        String url = serviceUrl + "/organizations/hello";
+        try {
+            client = createSSLClient();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Response response = client.target(url).request(MediaType.APPLICATION_JSON_TYPE).get();
+        return response;
     }
 
     public Result<OrganizationDTO> getOrganizationById(long id) {

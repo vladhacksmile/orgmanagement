@@ -1,5 +1,6 @@
 package com.vladhacksmile.orgservice.manager;
 
+import com.vladhacksmile.orgservice.integration.OrganizationClient;
 import com.vladhacksmile.orgservice.model.entity.Employee;
 import com.vladhacksmile.orgservice.model.result.Result;
 import com.vladhacksmile.orgservice.service.OrganizationService;
@@ -13,6 +14,13 @@ import jakarta.ws.rs.core.Response;
 public class OrganizationManagerController {
 
     OrganizationService organizationService = new OrganizationService();
+    OrganizationClient organizationClient = new OrganizationClient();
+
+    @GET
+    @Path("/getHello")
+    public Response getHello(){
+        return  organizationClient.getHello();
+    }
 
     @POST
     @Path("/hire/{id}")

@@ -32,10 +32,15 @@ public class OrganizationService {
             throw new IllegalArgumentException(migrateEmployeesResult.getDescription());
         }
 
-        Result<OrganizationDTO> deleteteOrganizationResult = organizationClient.deleteOrganizationById(organizationId1);
-        if (deleteteOrganizationResult.isError()) {
-            throw new IllegalArgumentException(deleteteOrganizationResult.getDescription());
-        }
+        Result<OrganizationDTO> deleteOrganizationResult = organizationClient.deleteOrganizationById(organizationId1);
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        if (deleteOrganizationResult.isError()) {
+//            throw new IllegalArgumentException(deleteOrganizationResult.getDescription());
+//        }
 
         return createWithOk();
     }
