@@ -15,7 +15,7 @@ public interface OrganizationService {
     Result<SearchResult<Organization>> getAll(int pageNum, int pageSize, String sortType, String sortColumn,
                                               String filterOperation, String filterField, String filterValue);
 
-    Result<SearchResult<Organization>> findSubstring(int pageNum, int pageSize, String field, String substring);
+    Result<SearchResult<Organization>> findSubstring(int pageNum, int pageSize, String sortType, String sortColumn, String substring);
 
     Result<Integer> countLowerAnnualTurnover(Float annualTurnover);
 

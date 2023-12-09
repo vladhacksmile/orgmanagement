@@ -202,14 +202,11 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public Result<SearchResult<Organization>> findSubstring(int pageNum, int pageSize, String field, String substring) {
-        if (StringUtils.isEmpty(field)) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, FIELD_IS_NULL);
-        }
+    public Result<SearchResult<Organization>> findSubstring(int pageNum, int pageSize, String sortType, String sortColumn, String substring) {
         if (StringUtils.isEmpty(substring)) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, SUBSTRING_IS_NULL);
         }
-        return getAll(pageNum, pageSize, "ASC", null, SearchCriteria.SearchOperation.LIKE.getName(), field, substring);
+        return getAll(pageNum, pageSize, sortType, sortColumn, SearchCriteria.SearchOperation.LIKE.getName(), "name", substring);
     }
 
     @Override

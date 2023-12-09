@@ -70,13 +70,14 @@ public class OrganizationController {
         return ResponseMapper.map(organizationService.findUniqueAnnualTurnover());
     }
 
-//    @PostMapping("/operations/find-substring")
-//    public ResponseEntity<Result<SearchResult<Organization>>> findSubstring(
-//            @RequestParam(name = "page_num", defaultValue = "1") int pageNum,
-//            @RequestParam(name = "page_size", defaultValue = "10") int pageSize,
-//            @RequestParam(value = "field", defaultValue = "") String field,
-//            @RequestParam(value = "substring", defaultValue = "") String substring) {
-//        return ResponseMapper.map(organizationService.findSubstring(pageNum, pageSize, field, substring));
-//    }
+    @PostMapping("/operations/find-substring")
+    public ResponseEntity<Result<SearchResult<Organization>>> findSubstring(
+            @RequestParam(name = "page_num", defaultValue = "1") int pageNum,
+            @RequestParam(name = "page_size", defaultValue = "10") int pageSize,
+            @RequestParam(name = "sort_type", defaultValue = "ASC") String sortType,
+            @RequestParam(value = "sort_column", defaultValue = "ID") String sortColumn,
+            @RequestParam(value = "substring", defaultValue = "") String substring) {
+        return ResponseMapper.map(organizationService.findSubstring(pageNum, pageSize, sortType, sortColumn, substring));
+    }
 
 }
