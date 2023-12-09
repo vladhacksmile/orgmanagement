@@ -1,4 +1,5 @@
 package com.vladhacksmile.orgservice.manager;
+
 import com.vladhacksmile.orgservice.model.entity.Employee;
 import com.vladhacksmile.orgservice.model.result.Result;
 import com.vladhacksmile.orgservice.service.OrganizationService;
@@ -6,16 +7,10 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import javax.inject.Inject;
-import javax.naming.NamingException;
-
 @Path("/orgmanager")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class OrganizationManagerController {
-
-//    @Inject
-//    OrganizationService organizationService;
 
     OrganizationService organizationService = new OrganizationService();
 

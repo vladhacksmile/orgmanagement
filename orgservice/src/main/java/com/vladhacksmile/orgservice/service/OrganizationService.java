@@ -11,8 +11,6 @@ import static com.vladhacksmile.orgservice.model.result.Result.createWithOk;
 
 @ApplicationScoped
 public class OrganizationService {
-//    @Inject
-//    private OrganizationClient organizationClient;
 
     OrganizationClient organizationClient = new OrganizationClient();
 
