@@ -46,6 +46,10 @@ public class OrganizationServiceImpl implements OrganizationService {
             return createWithStatusAndDesc(INCORRECT_PARAMS, COORDINATE_X_IS_NULL);
         }
 
+        if (organizationDTO.getCoordinateX() < -963) {
+            return createWithStatusAndDesc(INCORRECT_PARAMS, COORDINATE_X_IS_INCORRECT);
+        }
+
         if (organizationDTO.getCoordinateY() == null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, COORDINATE_Y_IS_NULL);
         }
@@ -66,6 +70,9 @@ public class OrganizationServiceImpl implements OrganizationService {
             return createWithStatusAndDesc(INCORRECT_PARAMS, ANNUAL_TURNOVER_IS_NULL);
         }
 
+        if (organizationDTO.getAnnualTurnover() < 1) {
+            return createWithStatusAndDesc(INCORRECT_PARAMS, ANNUAL_TURNOVER_IS_INCORRECT);
+        }
 
         Organization organization = organizationRepository.save(new Organization(null, organizationDTO.getName(), organizationDTO.getCoordinateX(),
                 organizationDTO.getCoordinateY(), ZonedDateTime.now(), organizationDTO.getAnnualTurnover(),
