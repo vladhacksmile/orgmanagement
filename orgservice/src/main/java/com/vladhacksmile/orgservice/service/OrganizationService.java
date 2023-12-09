@@ -33,14 +33,7 @@ public class OrganizationService {
         }
 
         Result<OrganizationDTO> deleteOrganizationResult = organizationClient.deleteOrganizationById(organizationId1);
-//        try {
-//            Thread.sleep(500);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//        if (deleteOrganizationResult.isError()) {
-//            throw new IllegalArgumentException(deleteOrganizationResult.getDescription());
-//        }
+
 
         return createWithOk();
     }
