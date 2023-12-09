@@ -26,6 +26,13 @@ public class EmployeeController {
         return ResponseMapper.map(employeeService.getAll(pageNum, pageSize));
     }
 
+    @GetMapping("/organization/{id}")
+    public ResponseEntity<Result<SearchResult<Employee>>> getAllByOrganization(@RequestParam(name = "page_num", defaultValue = "1") int pageNum,
+                                                                 @RequestParam(name = "page_size", defaultValue = "10") int pageSize,
+                                                                               @PathVariable Long id) {
+        return ResponseMapper.map(employeeService.getAllByOrganization(pageNum, pageSize, id));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Result<EmployeeDTO>> get(@PathVariable Long id) {
         return ResponseMapper.map(employeeService.get(id));

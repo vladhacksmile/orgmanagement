@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -69,7 +70,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         Employee employee = employeeRepository.save(new Employee(null, employeeDTO.getUserName(), employeeDTO.getFirstName(),
-                employeeDTO.getLastName(), employeeDTO.getEmail(), employeeDTO.getOrganizationId()));
+                employeeDTO.getLastName(), employeeDTO.getEmail(), organization.getId()));
 
         return createWithOk(EmployeeMapper.fromEntity(employee));
     }
@@ -126,7 +127,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             if (organization == null) {
                 return createWithStatusAndDesc(NOT_FOUND, ORGANIZATION_NOT_FOUND);
             }
-            employee.setOrganizationId(employeeDTO.getOrganizationId());
+            employee.setOrganizationId(organization.getId());
         }
 
         employee = employeeRepository.save(employee);
@@ -164,6 +165,27 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
         Page<Employee> employeesPage = employeeRepository.findAll(pageable);
+
+        List<Employee> employees = employeesPage.stream().toList();
+        if (CollectionUtils.isEmpty(employees)) {
+            return createWithStatusAndDesc(NOT_FOUND, EMPLOYEE_NOT_FOUND);
+        }
+
+        return createWithOk(makeSearchResult(employees, employees.size(), employeesPage.getTotalPages(), employeesPage.getTotalElements()));
+    }
+
+    @Override
+    public Result<SearchResult<Employee>> getAllByOrganization(int pageNum, int pageSize, Long organizationId) {
+        if (pageNum < 1) {
+            return createWithStatusAndDesc(INCORRECT_PARAMS, PAGE_NUM_MUST_BE_POSITIVE);
+        }
+
+        if (pageSize < 1) {
+            return createWithStatusAndDesc(INCORRECT_PARAMS, PAGE_SIZE_MUST_BE_POSITIVE);
+        }
+
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.by(Sort.Direction.ASC, "id"));
+        Page<Employee> employeesPage = employeeRepository.findAllByOrganizationId(organizationId, pageable);
 
         List<Employee> employees = employeesPage.stream().toList();
         if (CollectionUtils.isEmpty(employees)) {
