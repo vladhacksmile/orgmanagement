@@ -30,7 +30,11 @@ public class OrganizationSpecification implements Specification<Organization> {
                     return builder.lessThan(root.get(lowerObject), lowerValue);
                 }
                 case LIKE -> {
-                    return builder.like(root.get(lowerObject), lowerValue);
+                    return builder.like(
+                            builder.lower(
+                                    root.get(lowerObject)
+                            ), "%" + lowerValue + "%"
+                    );
                 }
                 case EQUAL -> {
                     return builder.equal(root.get(lowerObject), lowerValue);
