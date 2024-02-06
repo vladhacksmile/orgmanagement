@@ -13,6 +13,7 @@
 
     <modules>
         <module>orgmanagement</module>
+        <module>orgmanagement_service</module>
         <module>orgservice</module>
     </modules>
 
