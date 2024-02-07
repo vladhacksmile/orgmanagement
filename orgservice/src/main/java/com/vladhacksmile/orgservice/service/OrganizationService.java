@@ -4,17 +4,16 @@ import com.vladhacksmile.orgservice.integration.OrganizationClient;
 import com.vladhacksmile.orgservice.model.entity.Employee;
 import com.vladhacksmile.orgservice.model.entity.OrganizationDTO;
 import com.vladhacksmile.orgservice.model.result.Result;
-
-import javax.enterprise.context.ApplicationScoped;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import static com.vladhacksmile.orgservice.model.result.Result.createWithOk;
 
-@ApplicationScoped
+@Service
 public class OrganizationService {
 
-    OrganizationClient organizationClient = new OrganizationClient();
-
-
+    @Autowired
+    private OrganizationClient organizationClient;
 
     public Result<?> hire(Long organizationId, Employee employee) {
         employee.setOrganizationId(organizationId);
@@ -29,11 +28,10 @@ public class OrganizationService {
     public Result<?> acquise(Long organizationId1, Long organizationId2) {
         Result<Integer> migrateEmployeesResult = organizationClient.migrateEmployees(organizationId1, organizationId2);
         if (migrateEmployeesResult.isError()) {
-            throw new IllegalArgumentException(migrateEmployeesResult.getDescription());
+            return migrateEmployeesResult;
         }
 
         Result<OrganizationDTO> deleteOrganizationResult = organizationClient.deleteOrganizationById(organizationId1);
-
 
         return createWithOk();
     }

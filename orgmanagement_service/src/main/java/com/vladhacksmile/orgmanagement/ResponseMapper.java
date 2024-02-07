@@ -1,4 +1,4 @@
-package model;
+package com.vladhacksmile.orgmanagement;
 
 import model.result.Result;
 import org.springframework.http.HttpStatus;

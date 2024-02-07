@@ -1,66 +1,43 @@
 package com.vladhacksmile.orgservice.manager;
 
-import com.vladhacksmile.orgservice.integration.OrganizationClient;
 import com.vladhacksmile.orgservice.model.entity.Employee;
 import com.vladhacksmile.orgservice.model.result.Result;
+import com.vladhacksmile.orgservice.model.result.Status;
+import com.vladhacksmile.orgservice.model.result.StatusDescription;
 import com.vladhacksmile.orgservice.service.OrganizationService;
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-@Path("/orgmanager")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
+@RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/orgmanager")
 public class OrganizationManagerController {
 
-    OrganizationService organizationService = new OrganizationService();
-    OrganizationClient organizationClient = new OrganizationClient();
+    @Autowired
+    private OrganizationService organizationService;
 
-    @GET
-    @Path("/getHello")
-    public Response getHello(){
-        return  organizationClient.getHello();
-    }
-
-    @POST
-    @Path("/hire/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response hire(@PathParam("id") Long organizationId, Employee employee) {
+    @PostMapping("/hire/{id}")
+    public Result<?> hire(@PathVariable("id") Long organizationId, Employee employee) {
         if (organizationId == null) {
-            throw new IllegalArgumentException("ID is null");
+            return Result.createWithStatusAndDesc(Status.INCORRECT_PARAMS, StatusDescription.ORGANIZATION_ID_IS_NULL);
         }
         if (employee == null) {
-            throw new IllegalArgumentException("Employee is null");
+            return Result.createWithStatusAndDesc(Status.INCORRECT_PARAMS, StatusDescription.EMPLOYEE_IS_NULL);
         }
 
-        Result<?> hireResult = organizationService.hire(organizationId, employee);
-        if (hireResult.isError()) {
-            return Response.status(hireResult.getStatus().getHttpStatus(), hireResult.getDescription())
-                    .build();
-        }
-
-        return Response.ok().build();
+        return organizationService.hire(organizationId, employee);
     }
 
-    @POST
-    @Path("/acquise/{organizationId1}/{organizationId2}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response acquise(@PathParam("organizationId1") Long organizationId1, @PathParam("organizationId2") Long organizationId2) {
+    @PatchMapping("/acquise/{organizationId1}/{organizationId2}")
+    public Result<?> acquise(@PathVariable("organizationId1") Long organizationId1, @PathVariable("organizationId2") Long organizationId2) {
         if (organizationId1 == null) {
-            throw new IllegalArgumentException("organization 1 is null");
+            return Result.createWithStatusAndDesc(Status.INCORRECT_PARAMS, StatusDescription.ORGANIZATION_ID_IS_NULL);
         }
 
         if (organizationId2 == null) {
-            throw new IllegalArgumentException("organization 2 is null");
+            return Result.createWithStatusAndDesc(Status.INCORRECT_PARAMS, StatusDescription.ORGANIZATION_ID_IS_NULL);
         }
 
-        Result<?> acquiseResult = organizationService.acquise(organizationId1, organizationId2);
-        if (acquiseResult.isError()) {
-            return Response.status(acquiseResult.getStatus().getHttpStatus(), acquiseResult.getDescription()).build();
-        }
-
-        return Response.ok().build();
+        return organizationService.acquise(organizationId1, organizationId2);
     }
 }

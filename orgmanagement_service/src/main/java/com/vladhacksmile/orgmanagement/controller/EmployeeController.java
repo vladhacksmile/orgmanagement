@@ -1,8 +1,8 @@
 package com.vladhacksmile.orgmanagement.controller;
 
+import com.vladhacksmile.orgmanagement.ResponseMapper;
 import dto.EmployeeDTO;
 import lombok.extern.slf4j.Slf4j;
-import model.ResponseMapper;
 import model.entity.Employee;
 import model.result.Result;
 import model.result.SearchResult;
