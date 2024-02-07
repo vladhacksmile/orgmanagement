@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: eureka-server
+  config:
+    import: configserver:http://localhost:8888
+  cloud:
+    config:
+      username: test
+      password: test
+      profile: development
+
+server:
+  port: 8761

@@ -21,7 +21,7 @@ public class EJBConfiguration {
     public Context context() throws NamingException {
         Properties jndiProps = new Properties();
         jndiProps.put(Context.INITIAL_CONTEXT_FACTORY, WildFlyInitialContextFactory.class.getName());
-        jndiProps.put(Context.PROVIDER_URL, "remote+http://localhost:8180");
+        jndiProps.put(Context.PROVIDER_URL, "remote+http://localhost:8081");
         return new InitialContext(jndiProps);
     }
 
