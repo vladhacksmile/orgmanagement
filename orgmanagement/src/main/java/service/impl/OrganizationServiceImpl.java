@@ -17,7 +17,7 @@ import service.OrganizationService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
+//import javax.transaction.Transactional;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +28,7 @@ import static model.result.Status.NOT_FOUND;
 import static model.result.StatusDescription.*;
 
 @Data
-@Remote(OrganizationServiceImpl.class)
+@Remote(OrganizationService.class)
 @Stateless(name = "OrganizationService")
 @Pool("slsb-strict-max-pool")
 public class OrganizationServiceImpl implements OrganizationService {
@@ -37,7 +37,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private EntityManager entityManager;
 
     @Override
-    @Transactional
+//    @Transactional
     public Result<OrganizationDTO> add(OrganizationDTO organizationDTO) {
         if (organizationDTO.getId() != null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, ID_MUST_BE_NULL);
@@ -99,7 +99,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    @Transactional
+//    @Transactional
     public Result<OrganizationDTO> put(OrganizationDTO organizationDTO) {
         if (organizationDTO == null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, ORGANIZATION_IS_NULL);
@@ -145,7 +145,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    @Transactional
+//    @Transactional
     public Result<OrganizationDTO> delete(Long id) {
         if (id == null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, ID_IS_NULL);

@@ -17,7 +17,7 @@ import service.EmployeeService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
+//import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,7 +27,7 @@ import static model.result.Status.NOT_FOUND;
 import static model.result.StatusDescription.*;
 
 @Data
-@Remote(EmployeeServiceImpl.class)
+@Remote(EmployeeService.class)
 @Stateless(name = "EmployeeService")
 @Pool("slsb-strict-max-pool")
 public class EmployeeServiceImpl implements EmployeeService {
@@ -36,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EntityManager entityManager;
 
     @Override
-    @Transactional
+//    @Transactional
     public Result<EmployeeDTO> add(EmployeeDTO employeeDTO) {
         if (employeeDTO.getId() != null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, ID_MUST_BE_NULL);
@@ -90,7 +90,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    @Transactional
+//    @Transactional
     public Result<EmployeeDTO> put(EmployeeDTO employeeDTO) {
         if (employeeDTO == null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, EMPLOYEE_IS_NULL);
@@ -136,7 +136,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    @Transactional
+//    @Transactional
     public Result<EmployeeDTO> delete(Long id) {
         if (id == null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, ID_IS_NULL);
@@ -153,26 +153,31 @@ public class EmployeeServiceImpl implements EmployeeService {
         return createWithOk(EmployeeMapper.fromEntity(employee));
     }
 
+//    @Override
+//    public Result<SearchResult<Employee>> getAll(int pageNum, int pageSize) {
+//        if (pageNum < 1) {
+//            return createWithStatusAndDesc(INCORRECT_PARAMS, PAGE_NUM_MUST_BE_POSITIVE);
+//        }
+//
+//        if (pageSize < 1) {
+//            return createWithStatusAndDesc(INCORRECT_PARAMS, PAGE_SIZE_MUST_BE_POSITIVE);
+//        }
+//
+//        String sql = "SELECT e FROM Employee e ORDER BY e.id";
+//        Query query = entityManager.createQuery(sql);
+//        query.setMaxResults(pageSize);
+//        query.setFirstResult(pageNum * pageSize);
+//        List<Employee> employees = query.getResultList();
+//        if (CollectionUtils.isEmpty(employees)) {
+//            return createWithStatusAndDesc(NOT_FOUND, EMPLOYEE_NOT_FOUND);
+//        }
+//
+//        return createWithOk(SearchResult.makeSearchResult(employees, employees.size(), query.getMaxResults() / pageSize, (long) query.getMaxResults()));
+//    }
+
     @Override
     public Result<SearchResult<Employee>> getAll(int pageNum, int pageSize) {
-        if (pageNum < 1) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, PAGE_NUM_MUST_BE_POSITIVE);
-        }
-
-        if (pageSize < 1) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, PAGE_SIZE_MUST_BE_POSITIVE);
-        }
-
-        String sql = "SELECT e FROM Employee e ORDER BY e.id";
-        Query query = entityManager.createQuery(sql);
-        query.setMaxResults(pageSize);
-        query.setFirstResult(pageNum * pageSize);
-        List<Employee> employees = query.getResultList();
-        if (CollectionUtils.isEmpty(employees)) {
-            return createWithStatusAndDesc(NOT_FOUND, EMPLOYEE_NOT_FOUND);
-        }
-
-        return createWithOk(SearchResult.makeSearchResult(employees, employees.size(), query.getMaxResults() / pageSize, (long) query.getMaxResults()));
+        return createWithStatusAndDesc(INCORRECT_PARAMS, PAGE_NUM_MUST_BE_POSITIVE);
     }
 
     @Override
@@ -199,7 +204,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    @Transactional
+//    @Transactional
     public Result<Integer> migrateEmployees(Long organizationId1, Long organizationId2) {
         if (organizationId1 == null) {
             return createWithStatusAndDesc(INCORRECT_PARAMS, FIRST_ORGANIZATION_ID_IS_NULL);

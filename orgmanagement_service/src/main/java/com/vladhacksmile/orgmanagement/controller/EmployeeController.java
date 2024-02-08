@@ -2,7 +2,6 @@ package com.vladhacksmile.orgmanagement.controller;
 
 import com.vladhacksmile.orgmanagement.ResponseMapper;
 import dto.EmployeeDTO;
-import lombok.extern.slf4j.Slf4j;
 import model.entity.Employee;
 import model.result.Result;
 import model.result.SearchResult;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.EmployeeService;
 
-@Slf4j
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/employees")

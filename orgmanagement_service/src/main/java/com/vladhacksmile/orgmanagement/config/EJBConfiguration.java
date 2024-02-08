@@ -21,20 +21,20 @@ public class EJBConfiguration {
     public Context context() throws NamingException {
         Properties jndiProps = new Properties();
         jndiProps.put(Context.INITIAL_CONTEXT_FACTORY, WildFlyInitialContextFactory.class.getName());
-        jndiProps.put(Context.PROVIDER_URL, "remote+http://localhost:8081");
+        jndiProps.put(Context.PROVIDER_URL, "remote+http://localhost:8080");
         return new InitialContext(jndiProps);
     }
 
     @Bean
     @DependsOn("context")
-    public OrganizationServiceImpl organizationServiceBean(Context context) throws NamingException {
-        return (OrganizationServiceImpl) context.lookup(getFullName(OrganizationServiceImpl.class, OrganizationService.class));
+    public OrganizationService organizationServiceBean(Context context) throws NamingException {
+        return (OrganizationService) context.lookup(getFullName(OrganizationServiceImpl.class, OrganizationService.class));
     }
 
     @Bean
     @DependsOn("context")
-    public EmployeeServiceImpl employeeServiceBean(Context context) throws NamingException {
-        return (EmployeeServiceImpl) context.lookup(getFullName(EmployeeServiceImpl.class, EmployeeService.class));
+    public EmployeeService employeeServiceBean(Context context) throws NamingException {
+        return (EmployeeService) context.lookup(getFullName(EmployeeServiceImpl.class, EmployeeService.class));
     }
 
     private String getFullName(Class<?> classType, Class<?> interfaceType) {

@@ -1,10 +1,12 @@
 package model.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 
-@Entity(name = "Employee")
+
+@Entity
+@Table(name="Employee")
 @Getter
 @Setter
 @AllArgsConstructor

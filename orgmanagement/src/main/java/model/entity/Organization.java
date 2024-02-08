@@ -1,11 +1,13 @@
 package model.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
+
 import java.time.ZonedDateTime;
 
-@Entity(name = "Organization")
+@Entity
+@Table(name="Organization")
 @Getter
 @Setter
 @AllArgsConstructor

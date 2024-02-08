@@ -2,7 +2,7 @@ package com.vladhacksmile.orgmanagement.controller;
 
 import com.vladhacksmile.orgmanagement.ResponseMapper;
 import dto.OrganizationDTO;
-import lombok.extern.slf4j.Slf4j;
+
 import model.entity.Organization;
 import model.result.Result;
 import model.result.SearchResult;
@@ -13,7 +13,7 @@ import service.OrganizationService;
 
 import java.util.List;
 
-@Slf4j
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/organizations")
