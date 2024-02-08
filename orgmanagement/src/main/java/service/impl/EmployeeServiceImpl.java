@@ -9,9 +9,9 @@ import model.entity.Employee;
 import model.entity.Organization;
 import model.result.Result;
 import model.result.SearchResult;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.ejb3.annotation.Pool;
-import org.springframework.util.CollectionUtils;
 import service.EmployeeService;
 
 import javax.persistence.EntityManager;
