@@ -1,19 +1,19 @@
 package com.vladhacksmile.orgmanagement.controller;
 
-import com.vladhacksmile.orgmanagement.ResponseMapper;
-import dto.OrganizationDTO;
-
-import model.entity.Organization;
-import model.result.Result;
-import model.result.SearchResult;
+import com.vladhacksmile.orgmanagement.dto.OrganizationDTO;
+import com.vladhacksmile.orgmanagement.model.ResponseMapper;
+import com.vladhacksmile.orgmanagement.model.entity.Organization;
+import com.vladhacksmile.orgmanagement.model.result.Result;
+import com.vladhacksmile.orgmanagement.model.result.SearchResult;
+import com.vladhacksmile.orgmanagement.service.OrganizationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.OrganizationService;
 
 import java.util.List;
 
-
+@Slf4j
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/organizations")
@@ -21,6 +21,11 @@ public class OrganizationController {
 
     @Autowired
     private OrganizationService organizationService;
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "hello from 1";
+    }
 
     @GetMapping
     public ResponseEntity<Result<SearchResult<Organization>>> getAll(
