@@ -17,7 +17,7 @@ public class OrganizationManagerController {
     private OrganizationService organizationService;
 
     @PostMapping("/hire/{id}")
-    public Result<?> hire(@PathVariable("id") Long organizationId, Employee employee) {
+    public Result<?> hire(@PathVariable("id") Long organizationId, @RequestBody Employee employee) {
         if (organizationId == null) {
             return Result.createWithStatusAndDesc(Status.INCORRECT_PARAMS, StatusDescription.ORGANIZATION_ID_IS_NULL);
         }

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@Data
 @Entity(name = "Employee")
 @Getter
 @Setter

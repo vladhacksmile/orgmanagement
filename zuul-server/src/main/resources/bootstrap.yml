@@ -5,6 +5,6 @@ spring:
     active: dev
   cloud:
     config:
-      uri: https://localhost:8788
+      uri: http://localhost:8788
 #  mvc:
 #    dispatch-options-request: true

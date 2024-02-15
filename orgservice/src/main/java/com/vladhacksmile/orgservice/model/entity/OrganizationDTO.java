@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.time.ZonedDateTime;
 
+@Data
 @Getter
 @Setter
 @AllArgsConstructor

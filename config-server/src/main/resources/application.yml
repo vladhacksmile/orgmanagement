@@ -1,16 +1,20 @@
 server:
   port: 8788
-  ssl:
-    key-store: classpath:keystore/keystore.jks
-    key-store-password: password
-    key-alias: soa
-    key-store-type: pkcs12
+#  ssl:
+#    key-store: classpath:keystore/keystore.jks
+#    key-store-password: password
+#    key-alias: soa
+#    key-store-type: pkcs12
 
 spring:
   cloud:
     config:
       server:
         git:
-          uri: ${GIT_CONFIG_URI}
-          username: ${GIT_CONFIG_USERNAME}
-          password: ${GIT_CONFIG_PASS}
+          uri: https://github.com/Xaviontt/soa-configs
+          clone-on-start: true
+          default-label: main
+  security:
+    user:
+      name: test
+      password: test

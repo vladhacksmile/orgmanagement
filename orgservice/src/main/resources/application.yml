@@ -4,4 +4,6 @@ spring:
   profiles:
     active: dev
   config:
-    import: configserver:https://localhost:8788
+    import: configserver:http://localhost:8788
+#server:
+#  port: 8082

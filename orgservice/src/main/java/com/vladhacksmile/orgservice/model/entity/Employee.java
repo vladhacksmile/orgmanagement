@@ -2,6 +2,7 @@ package com.vladhacksmile.orgservice.model.entity;
 
 import lombok.*;
 
+@Data
 @Getter
 @Setter
 @AllArgsConstructor

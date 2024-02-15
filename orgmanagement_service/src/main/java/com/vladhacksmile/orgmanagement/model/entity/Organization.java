@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 
+@Data
 @Entity(name = "Organization")
 @Getter
 @Setter
