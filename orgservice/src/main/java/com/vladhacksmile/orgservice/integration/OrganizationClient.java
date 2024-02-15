@@ -3,6 +3,7 @@ package com.vladhacksmile.orgservice.integration;
 import com.vladhacksmile.orgservice.model.entity.Employee;
 import com.vladhacksmile.orgservice.model.entity.OrganizationDTO;
 import com.vladhacksmile.orgservice.model.result.Result;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -15,16 +16,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @Service
 public class OrganizationClient {
-    private final String serviceUrl = "https://localhost:8080";
+
+    private final String serviceUrl = "http://localhost:8080";
 
     @Autowired
     private RestTemplate restTemplate;
 
-    public Result<OrganizationDTO> getOrganizationById(long id) {
-        String url = serviceUrl + "/organizations/" + id;
-        return restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Result<OrganizationDTO>>(){}).getBody();
-    }
-
+    @SneakyThrows
     public Result<Employee> addEmployee(Employee employee) {
         String url = serviceUrl + "/employees";
         HttpHeaders headers = new HttpHeaders();
@@ -33,6 +31,7 @@ public class OrganizationClient {
                 new ParameterizedTypeReference<Result<Employee>>(){}).getBody();
     }
 
+    @SneakyThrows
     public Result<Integer> migrateEmployees(Long organizationId1, Long organizationId2) {
         String url = serviceUrl + "/employees/migrate/" + organizationId1 + "/" + organizationId2;
         HttpHeaders headers = new HttpHeaders();
@@ -41,6 +40,7 @@ public class OrganizationClient {
                 new ParameterizedTypeReference<Result<Integer>>(){}).getBody();
     }
 
+    @SneakyThrows
     public Result<OrganizationDTO> deleteOrganizationById(long id) {
         String url = serviceUrl + "/organizations/" + id;
         HttpHeaders headers = new HttpHeaders();

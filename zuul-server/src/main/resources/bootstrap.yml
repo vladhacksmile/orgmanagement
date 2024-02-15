@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: zuul-server
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: https://localhost:8788
+#  mvc:
+#    dispatch-options-request: true
