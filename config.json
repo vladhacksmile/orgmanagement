@@ -1,0 +1,22 @@
+{
+  "datacenter": "primary-dc",
+  "bind_addr": "0.0.0.0",
+  "client_addr": "0.0.0.0",
+  "bootstrap": true,
+  "disable_update_check": true,
+  "verify_incoming": false,
+  "verify_outgoing": false,
+  "verify_server_hostname": false,
+  "addresses": {
+    "http": "127.0.0.1"
+  },
+  "ports": {
+    "http": 8500,
+    "https": 8501,
+    "grpc_tls": -1
+  },
+  "dns_config": {
+    "enable_truncate": true,
+    "udp_answer_limit": 100
+  }
+}

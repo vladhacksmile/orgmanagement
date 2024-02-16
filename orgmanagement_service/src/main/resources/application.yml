@@ -1,0 +1,54 @@
+#spring:
+#  application:
+#    name: first-service
+#  profiles:
+#    active: dev
+#  config:
+#    import: configserver:https://localhost:8788
+
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:54321/studs
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        generate_statistics: false
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+  application:
+    name: orgmanagementservice
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      config:
+        enabled: true
+        import-check:
+          enabled: false
+      discovery:
+        enabled: true
+        healthCheckPath: /api/v1/my-health-check
+        healthCheckInterval: 20s
+
+
+server:
+  servlet:
+    context-path: /api/v1
+  port: 8080
+  #  ssl:
+  #    key-store: classpath:keystore/keystore.jks
+  #    key-store-password: password
+  #    key-store-type: pkcs12
+  #    key-alias: soa
+
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
