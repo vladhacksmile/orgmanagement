@@ -32,13 +32,4 @@ spring:
 server:
   servlet:
     context-path: /api/v1
-  port: 8080
-#  ssl:
-#    key-store: classpath:keystore/keystore.jks
-#    key-store-password: password
-#    key-store-type: pkcs12
-#    key-alias: soa
-
-jackson:
-  serialization:
-    write-dates-as-timestamps: true
+  port: 0

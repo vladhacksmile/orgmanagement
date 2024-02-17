@@ -1,10 +1,5 @@
 server:
   port: 8788
-#  ssl:
-#    key-store: classpath:keystore/keystore.jks
-#    key-store-password: password
-#    key-alias: soa
-#    key-store-type: pkcs12
 
 spring:
   cloud:
