@@ -9,6 +9,9 @@ public class CorsFilter implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedMethods("*");
+        registry.addMapping("/api/v1/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedMethods("*");
     }
 }

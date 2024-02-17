@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableDiscoveryClient
 @RestController
 public class OrgManagementApplication {
+
     @GetMapping("/my-health-check")
     public ResponseEntity<String> myCustomCheck() {
         String message = "Testing my healh check function";

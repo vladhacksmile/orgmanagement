@@ -49,5 +49,4 @@ public class OrganizationClient {
         return restTemplate.exchange(url, HttpMethod.DELETE, new HttpEntity<>(null, headers),
                 new ParameterizedTypeReference<Result<OrganizationDTO>>(){}).getBody();
     }
-
 }

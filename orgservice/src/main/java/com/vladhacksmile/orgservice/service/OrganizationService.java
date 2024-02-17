@@ -19,7 +19,7 @@ public class OrganizationService {
         employee.setOrganizationId(organizationId);
         Result<Employee> employeeAddResult = organizationClient.addEmployee(employee);
         if (employeeAddResult.isError()) {
-            throw new IllegalArgumentException(employeeAddResult.getDescription());
+            return employeeAddResult;
         }
 
         return createWithOk();
@@ -32,6 +32,9 @@ public class OrganizationService {
         }
 
         Result<OrganizationDTO> deleteOrganizationResult = organizationClient.deleteOrganizationById(organizationId1);
+        if (deleteOrganizationResult.isError()) {
+            return deleteOrganizationResult;
+        }
 
         return createWithOk();
     }

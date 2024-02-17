@@ -5,5 +5,3 @@ spring:
     active: dev
   config:
     import: configserver:http://localhost:8788
-#server:
-#  port: 8082
