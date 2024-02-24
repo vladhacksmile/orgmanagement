@@ -3,7 +3,6 @@ package com.vladhacksmile.orgservice.integration;
 import com.vladhacksmile.orgservice.model.entity.Employee;
 import com.vladhacksmile.orgservice.model.entity.OrganizationDTO;
 import com.vladhacksmile.orgservice.model.result.Result;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -18,12 +17,11 @@ import static org.springframework.http.MediaType.APPLICATION_XML;
 @Service
 public class OrganizationClient {
 
-    private final String serviceUrl = "http://localhost:8085/api/v1";
+    private final String serviceUrl = "https://localhost:8085/api/v1";
 
     @Autowired
     private RestTemplate restTemplate;
 
-    @SneakyThrows
     public Result<Employee> addEmployee(Employee employee) {
         String url = serviceUrl + "/employees";
         HttpHeaders headers = new HttpHeaders();
@@ -32,7 +30,6 @@ public class OrganizationClient {
                 new ParameterizedTypeReference<Result<Employee>>(){}).getBody();
     }
 
-    @SneakyThrows
     public Result<Integer> migrateEmployees(Long organizationId1, Long organizationId2) {
         String url = serviceUrl + "/employees/migrate/" + organizationId1 + "/" + organizationId2;
         HttpHeaders headers = new HttpHeaders();
@@ -41,7 +38,6 @@ public class OrganizationClient {
                 new ParameterizedTypeReference<Result<Integer>>(){}).getBody();
     }
 
-    @SneakyThrows
     public Result<OrganizationDTO> deleteOrganizationById(long id) {
         String url = serviceUrl + "/organizations/" + id;
         HttpHeaders headers = new HttpHeaders();
