@@ -127,7 +127,7 @@
                 </executions>
                 <configuration>
                     <sources>
-                        <source>/Users/vladislavharin/IdeaProjects/itmo/orgmanagement/orgmanagement_service/src/main/resources/employee.xsd</source>
+                        <source>C:\Users\xavio\MyDocs\ITMO\4 course\SOA\Lab 2\orgmanagement\orgmanagement_service\src\main\resources\employee.xsd</source>
                     </sources>
                 </configuration>
             </plugin>
