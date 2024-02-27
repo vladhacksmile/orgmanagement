@@ -16,20 +16,3 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQL9Dialect
   application:
     name: orgmanagementservice
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
-      config:
-        enabled: true
-        import-check:
-          enabled: false
-      discovery:
-        enabled: true
-        healthCheckPath: /api/v1/my-health-check
-        healthCheckInterval: 20s
-
-server:
-  servlet:
-    context-path: /api/v1
-  port: 0
