@@ -39,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public ResultEmployee add(EmployeeDTO employeeDTO) {
-        if (employeeDTO.getId() == 0) {
+        if (employeeDTO.getId() > 0) {
             return createEmployeeWithStatusAndDesc(INCORRECT_PARAMS, ID_MUST_BE_NULL);
         }
 
@@ -59,7 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             return createEmployeeWithStatusAndDesc(INCORRECT_PARAMS, EMAIL_IS_NULL);
         }
 
-        if (employeeDTO.getOrganizationId() == 0) {
+        if (employeeDTO.getOrganizationId() > 0) {
             return createEmployeeWithStatusAndDesc(INCORRECT_PARAMS, ORGANIZATION_ID_IS_NULL);
         }
 
@@ -95,7 +95,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             return createEmployeeWithStatusAndDesc(INCORRECT_PARAMS, EMPLOYEE_IS_NULL);
         }
 
-        if (employeeDTO.getId() == 0) {
+        if (employeeDTO.getId() > 0) {
             return createEmployeeWithStatusAndDesc(INCORRECT_PARAMS, ID_IS_NULL);
         }
 

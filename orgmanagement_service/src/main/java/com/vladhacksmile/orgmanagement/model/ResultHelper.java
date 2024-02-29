@@ -14,18 +14,18 @@ public class ResultHelper {
      * ЧТО УГОДНО СЮДА СУВАТЬ НЕЛЬЗЯ, ТОЛЬКО ОБЪЕКТ ИЗ wsdl
      */
     public static ResultInteger createIntegerWithStatusAndDesc(Status status, StatusDescription statusDescription) {
-        return createIntegerWithStatusAndDesc(status, statusDescription, null);
+        return createIntegerWithStatusAndDesc(status, statusDescription, 0);
     }
 
     public static ResultInteger createIntegerWithStatus(Status status) {
-        return createIntegerWithStatusAndDesc(status, null, null);
+        return createIntegerWithStatusAndDesc(status, null, 0);
     }
 
-    public static ResultInteger createIntegerWithOk(Integer value) {
+    public static ResultInteger createIntegerWithOk(int value) {
         return createIntegerWithStatusAndDesc(Status.OK, null, value);
     }
 
-    public static ResultInteger createIntegerWithStatusAndDesc(Status status, StatusDescription statusDescription, Integer value) {
+    public static ResultInteger createIntegerWithStatusAndDesc(Status status, StatusDescription statusDescription, int value) {
         ResultInteger genericResult = new ResultInteger();
         genericResult.setStatus(status);
         genericResult.setDescription(statusDescription != null ? statusDescription.name() : null);

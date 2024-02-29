@@ -21,6 +21,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -260,7 +261,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         organizationDTO.setCoordinateY(organization.getCoordinateY());
         organizationDTO.setCreationDate(convertToXMLGregorianCalendar(organization.getCreationDate()));
         organizationDTO.setAnnualTurnover(organization.getAnnualTurnover());
-        organizationDTO.setType(OrganizationType.valueOf(organization.getType().name())); // todo npe
+        organizationDTO.setType(organization.getType() != null ? OrganizationType.valueOf(organization.getType().name()) : null); // todo npe
         organizationDTO.setOfficialAddress(organization.getOfficialAddress());
 
         return organizationDTO;
@@ -268,8 +269,11 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     public static XMLGregorianCalendar convertToXMLGregorianCalendar(ZonedDateTime zonedDateTime) {
         try {
+            if (zonedDateTime == null) {
+                return null;
+            }
             DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
-            return datatypeFactory.newXMLGregorianCalendar(zonedDateTime.toString());
+            return datatypeFactory.newXMLGregorianCalendar(GregorianCalendar.from(zonedDateTime));
         } catch (DatatypeConfigurationException e) {
             return null;
         }
