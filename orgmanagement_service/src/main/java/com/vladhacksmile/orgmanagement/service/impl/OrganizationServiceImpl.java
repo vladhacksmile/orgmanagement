@@ -38,7 +38,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     @Transactional
     public ResultOrganization add(OrganizationDTO organizationDTO) {
-        if (organizationDTO.getId() != 0) {
+        if (organizationDTO.getId() > 0) {
             return createOrganizationWithStatusAndDesc(INCORRECT_PARAMS, ID_MUST_BE_NULL);
         }
 
