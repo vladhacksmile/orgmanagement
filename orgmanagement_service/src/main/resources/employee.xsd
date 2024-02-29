@@ -1,11 +1,47 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="8080/api/v1/orgservice"
            targetNamespace="8080/api/v1/orgservice" elementFormDefault="qualified">
 
+    <!-- Работники -->
     <xs:element name="GetAllEmployeesRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="page_num" type="xs:int" default="1"/>
                 <xs:element name="page_size" type="xs:int" default="10"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAllByOrganizationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="page_num" type="xs:int" default="1"/>
+                <xs:element name="page_size" type="xs:int" default="10"/>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetEmployeeByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteEmployeeByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="MigrateEmployeesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="organizationId1" type="xs:long"/>
+                <xs:element name="organizationId2" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -20,38 +56,217 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:element name="GenericResult">
+    <xs:simpleType name="OrganizationType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="PUBLIC"/>
+            <xs:enumeration value="GOVERNMENT"/>
+            <xs:enumeration value="TRUST"/>
+            <xs:enumeration value="PRIVATE_LIMITED_COMPANY"/>
+            <xs:enumeration value="OPEN_JOINT_STOCK_COMPANY"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="GenericResult">
+        <xs:sequence>
+            <xs:element name="object" type="xs:anyType"/>
+            <xs:element name="status" type="tns:Status"/>
+            <xs:element name="description" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="EmployeeDTO">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="userName" type="xs:string"/>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="organizationId" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="GenericSearchResult">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="object" type="xs:anyType"/>
+                <xs:element name="pageSize" type="xs:int"/>
+                <xs:element name="pageNum" type="xs:int"/>
+                <xs:element name="pageTotal" type="xs:int"/>
+                <xs:element name="totalElements" type="xs:long"/>
                 <xs:element name="status" type="tns:Status"/>
                 <xs:element name="description" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="SearchResult">
+    <xs:element name="ResultEmployee">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="objects" type="xs:anyType" maxOccurs="unbounded"/>
+                <xs:element name="object" type="tns:EmployeeDTO"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ResultInteger">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="xs:int"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddEmployeeRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employee" type="tns:EmployeeDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="PutEmployeeRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employee" type="tns:EmployeeDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="SearchResultEmployee">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="objects" type="tns:EmployeeDTO" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element name="pageSize" type="xs:int"/>
                 <xs:element name="pageNum" type="xs:int"/>
                 <xs:element name="pageTotal" type="xs:int"/>
                 <xs:element name="totalElements" type="xs:long"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="Employee">
+    <!-- Организации -->
+
+    <xs:complexType name="OrganizationDTO">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="coordinateX" type="xs:long"/>
+            <xs:element name="coordinateY" type="xs:long"/>
+            <xs:element name="creationDate" type="xs:dateTime"/>
+            <xs:element name="annualTurnover" type="xs:float"/>
+            <xs:element name="type" type="tns:OrganizationType"/>
+            <xs:element name="officialAddress" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="ResultOrganization">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="tns:OrganizationDTO"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="SearchResultOrganization">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="objects" type="tns:OrganizationDTO" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="pageSize" type="xs:int"/>
+                <xs:element name="pageNum" type="xs:int"/>
+                <xs:element name="pageTotal" type="xs:int"/>
+                <xs:element name="totalElements" type="xs:long"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddOrganizationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employee" type="tns:OrganizationDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="PutOrganizationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="employee" type="tns:OrganizationDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetOrganizationByIdRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="id" type="xs:long"/>
-                <xs:element name="userName" type="xs:string"/>
-                <xs:element name="firstName" type="xs:string"/>
-                <xs:element name="email" type="xs:string"/>
-                <xs:element name="organizationId" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="DeleteOrganizationByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAllOrganizationsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="page_num" type="xs:int" default="1"/>
+                <xs:element name="page_size" type="xs:int" default="10"/>
+                <xs:element name="sortType" type="xs:string" default="ASC"/>
+                <xs:element name="sort_column" type="xs:string" default="ID"/>
+                <xs:element name="filter_operation" type="xs:string" default=""/>
+                <xs:element name="filterField" type="xs:string" default=""/>
+                <xs:element name="filterValue" type="xs:string" default=""/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ResultListFloat">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="xs:float" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CountLowerAnnualTurnoverRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="annual-turnover" type="xs:float"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UniqueAnnualTurnoversRequest">
+        <xs:complexType>
+            <xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="FindSubstringRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="page_num" type="xs:int" default="1"/>
+                <xs:element name="page_size" type="xs:int" default="10"/>
+                <xs:element name="sortType" type="xs:string" default="ASC"/>
+                <xs:element name="sort_column" type="xs:string" default="ID"/>
+                <xs:element name="substring" type="xs:string" default=""/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

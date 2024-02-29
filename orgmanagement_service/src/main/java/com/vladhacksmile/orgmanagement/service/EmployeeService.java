@@ -1,16 +1,16 @@
 package com.vladhacksmile.orgmanagement.service;
 
-import com.vladhacksmile.orgmanagement.dto.EmployeeDTO;
-import com.vladhacksmile.orgmanagement.model.entity.Employee;
-import com.vladhacksmile.orgmanagement.model.result.Result;
-import com.vladhacksmile.orgmanagement.model.result.SearchResult;
+import _8080.api.v1.orgservice.EmployeeDTO;
+import _8080.api.v1.orgservice.ResultEmployee;
+import _8080.api.v1.orgservice.ResultInteger;
+import _8080.api.v1.orgservice.SearchResultEmployee;
 
 public interface EmployeeService {
-    Result<EmployeeDTO> add(EmployeeDTO employeeDTO);
-    Result<EmployeeDTO> get(Long id);
-    Result<EmployeeDTO> put(EmployeeDTO employeeDTO);
-    Result<EmployeeDTO> delete(Long id);
-    Result<SearchResult<Employee>> getAll(int pageNum, int pageSize);
-    Result<SearchResult<Employee>> getAllByOrganization(int pageNum, int pageSize, Long organizationId);
-    Result<Integer> migrateEmployees(Long organizationId1, Long organizationId2);
+    ResultEmployee add(EmployeeDTO employeeDTO);
+    ResultEmployee get(Long id);
+    ResultEmployee put(EmployeeDTO employeeDTO);
+    ResultEmployee delete(Long id);
+    SearchResultEmployee getAll(int pageNum, int pageSize);
+    SearchResultEmployee getAllByOrganization(int pageNum, int pageSize, Long organizationId);
+    ResultInteger migrateEmployees(Long organizationId1, Long organizationId2);
 }

@@ -1,10 +1,7 @@
 package com.vladhacksmile.orgmanagement.service.impl;
 
-import com.vladhacksmile.orgmanagement.dto.OrganizationDTO;
-import com.vladhacksmile.orgmanagement.mapper.OrganizationsMapper;
+import _8080.api.v1.orgservice.*;
 import com.vladhacksmile.orgmanagement.model.entity.Organization;
-import com.vladhacksmile.orgmanagement.model.result.Result;
-import com.vladhacksmile.orgmanagement.model.result.SearchResult;
 import com.vladhacksmile.orgmanagement.repository.OrganizationRepository;
 import com.vladhacksmile.orgmanagement.repository.OrganizationSpecification;
 import com.vladhacksmile.orgmanagement.repository.SearchCriteria;
@@ -19,14 +16,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.vladhacksmile.orgmanagement.model.result.Result.*;
-import static com.vladhacksmile.orgmanagement.model.result.SearchResult.makeSearchResult;
-import static com.vladhacksmile.orgmanagement.model.result.Status.INCORRECT_PARAMS;
-import static com.vladhacksmile.orgmanagement.model.result.Status.NOT_FOUND;
+import static _8080.api.v1.orgservice.Status.*;
+import static com.vladhacksmile.orgmanagement.model.ResultHelper.*;
 import static com.vladhacksmile.orgmanagement.model.result.StatusDescription.*;
 
 @Service
@@ -37,79 +36,79 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     @Transactional
-    public Result<OrganizationDTO> add(OrganizationDTO organizationDTO) {
-        if (organizationDTO.getId() != null) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, ID_MUST_BE_NULL);
+    public ResultOrganization add(OrganizationDTO organizationDTO) {
+        if (organizationDTO.getId() != 0) {
+            return createOrganizationWithStatusAndDesc(INCORRECT_PARAMS, ID_MUST_BE_NULL);
         }
 
-        if (organizationDTO.getCoordinateX() == null) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, COORDINATE_X_IS_NULL);
+        if (organizationDTO.getCoordinateX() == 0) {
+            return createOrganizationWithStatusAndDesc(INCORRECT_PARAMS, COORDINATE_X_IS_NULL);
         }
 
         if (organizationDTO.getCoordinateX() < -963) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, COORDINATE_X_IS_INCORRECT);
+            return createOrganizationWithStatusAndDesc(INCORRECT_PARAMS, COORDINATE_X_IS_INCORRECT);
         }
 
-        if (organizationDTO.getCoordinateY() == null) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, COORDINATE_Y_IS_NULL);
+        if (organizationDTO.getCoordinateY() == 0) {
+            return createOrganizationWithStatusAndDesc(INCORRECT_PARAMS, COORDINATE_Y_IS_NULL);
         }
 
         if (organizationDTO.getOfficialAddress() == null) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, ADDRESS_ID_IS_NULL);
+            return createOrganizationWithStatusAndDesc(INCORRECT_PARAMS, ADDRESS_ID_IS_NULL);
         }
 
         if (organizationDTO.getName() == null || organizationDTO.getName().isEmpty()) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, NAME_IS_NULL);
+            return createOrganizationWithStatusAndDesc(INCORRECT_PARAMS, NAME_IS_NULL);
         }
 
         if (organizationDTO.getType() == null) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, ORGANIZATION_TYPE_IS_NULL);
+            return createOrganizationWithStatusAndDesc(INCORRECT_PARAMS, ORGANIZATION_TYPE_IS_NULL);
         }
 
-        if (organizationDTO.getAnnualTurnover() == null) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, ANNUAL_TURNOVER_IS_NULL);
+        if (organizationDTO.getAnnualTurnover() == 0) {
+            return createOrganizationWithStatusAndDesc(INCORRECT_PARAMS, ANNUAL_TURNOVER_IS_NULL);
         }
 
         if (organizationDTO.getAnnualTurnover() < 1) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, ANNUAL_TURNOVER_IS_INCORRECT);
+            return createOrganizationWithStatusAndDesc(INCORRECT_PARAMS, ANNUAL_TURNOVER_IS_INCORRECT);
         }
 
         Organization organization = organizationRepository.save(new Organization(null, organizationDTO.getName(), organizationDTO.getCoordinateX(),
                 organizationDTO.getCoordinateY(), ZonedDateTime.now(), organizationDTO.getAnnualTurnover(),
-                organizationDTO.getType(), organizationDTO.getOfficialAddress()));
+                com.vladhacksmile.orgmanagement.model.entity.OrganizationType.valueOf(organizationDTO.getType().name()), organizationDTO.getOfficialAddress()));
 
-        return createWithOk(OrganizationsMapper.fromEntity(organization));
+        return createOrganizationWithOk(convert(organization));
     }
 
     @Override
-    public Result<OrganizationDTO> get(Long id) {
+    public ResultOrganization get(Long id) {
         if (id == null) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, ID_IS_NULL);
+            return createOrganizationWithStatusAndDesc(INCORRECT_PARAMS, ID_IS_NULL);
         }
 
         Organization organization = organizationRepository.findById(id).orElse(null);
         if (organization == null) {
-            return createWithStatusAndDesc(NOT_FOUND, ORGANIZATION_NOT_FOUND);
+            return createOrganizationWithStatusAndDesc(NOT_FOUND, ORGANIZATION_NOT_FOUND);
         }
 
-        return createWithOk(OrganizationsMapper.fromEntity(organization));
+        return createOrganizationWithOk(convert(organization));
     }
 
     @Override
     @Transactional
-    public Result<OrganizationDTO> put(OrganizationDTO organizationDTO) {
+    public ResultOrganization put(OrganizationDTO organizationDTO) {
         if (organizationDTO == null) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, ORGANIZATION_IS_NULL);
+            return createOrganizationWithStatusAndDesc(INCORRECT_PARAMS, ORGANIZATION_IS_NULL);
         }
 
-        if (organizationDTO.getId() == null) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, ID_IS_NULL);
+        if (organizationDTO.getId() == 0) {
+            return createOrganizationWithStatusAndDesc(INCORRECT_PARAMS, ID_IS_NULL);
         }
 
         Organization organization = organizationRepository.findById(organizationDTO.getId()).orElse(null);
 
         if (organization == null) {
-            return createWithStatusAndDesc(NOT_FOUND, ORGANIZATION_NOT_FOUND);
+            return createOrganizationWithStatusAndDesc(NOT_FOUND, ORGANIZATION_NOT_FOUND);
         }
 
         if (!Objects.equals(organization.getName(), organizationDTO.getName())) {
@@ -120,8 +119,8 @@ public class OrganizationServiceImpl implements OrganizationService {
             organization.setAnnualTurnover(organizationDTO.getAnnualTurnover());
         }
 
-        if (!Objects.equals(organization.getType(), organizationDTO.getType())) {
-            organization.setType(organizationDTO.getType());
+        if (!Objects.equals(organization.getType().name(), organizationDTO.getType().name())) {
+            organization.setType(com.vladhacksmile.orgmanagement.model.entity.OrganizationType.valueOf(organizationDTO.getType().name()));
         }
 
         if (!Objects.equals(organization.getAnnualTurnover(), organizationDTO.getAnnualTurnover())) {
@@ -138,55 +137,55 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         organizationRepository.save(organization);
 
-        return createWithOk(OrganizationsMapper.fromEntity(organization));
+        return createOrganizationWithOk(convert(organization));
     }
 
     @Override
     @Transactional
-    public Result<OrganizationDTO> delete(Long id) {
+    public ResultOrganization delete(Long id) {
         if (id == null) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, ID_IS_NULL);
+            return createOrganizationWithStatusAndDesc(INCORRECT_PARAMS, ID_IS_NULL);
         }
 
         Organization organization = organizationRepository.findById(id).orElse(null);
 
         if (organization == null) {
-            return createWithStatus(NOT_FOUND);
+            return createOrganizationWithStatusAndDesc(NOT_FOUND, ORGANIZATION_NOT_FOUND);
         }
 
         organizationRepository.deleteById(id);
 
-        return createWithOk(OrganizationsMapper.fromEntity(organization));
+        return createOrganizationWithOk(convert(organization));
     }
 
     @Override
-    public Result<SearchResult<Organization>> getAll(int pageNum, int pageSize, String sortType, String sortColumn,
-                                                     String filterOperation, String filterField, String filterValue) {
+    public SearchResultOrganization getAll(int pageNum, int pageSize, String sortType, String sortColumn,
+                                           String filterOperation, String filterField, String filterValue) {
         if (pageNum < 1) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, PAGE_NUM_MUST_BE_POSITIVE);
+            return createSearchResultOrganizationWithStatusAndDesc(INCORRECT_PARAMS, PAGE_NUM_MUST_BE_POSITIVE);
         }
 
         if (pageSize < 1) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, PAGE_SIZE_MUST_BE_POSITIVE);
+            return createSearchResultOrganizationWithStatusAndDesc(INCORRECT_PARAMS, PAGE_SIZE_MUST_BE_POSITIVE);
         }
 
         if (!sortType.equalsIgnoreCase("ASC") && !sortType.equalsIgnoreCase("DESC")) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, INCORRECT_SORT_TYPE);
+            return createSearchResultOrganizationWithStatusAndDesc(INCORRECT_PARAMS, INCORRECT_SORT_TYPE);
         }
 
         if (StringUtils.isNotEmpty(sortColumn) && !validateColumns(sortColumn)) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, INCORRECT_SORT_COLUMN);
+            return createSearchResultOrganizationWithStatusAndDesc(INCORRECT_PARAMS, INCORRECT_SORT_COLUMN);
         }
 
         if (StringUtils.isNotEmpty(filterField) && !validateColumns(filterField)) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, INCORRECT_FILTER_FIELD);
+            return createSearchResultOrganizationWithStatusAndDesc(INCORRECT_PARAMS, INCORRECT_FILTER_FIELD);
         }
 
         SearchCriteria.SearchOperation searchOperation = null;
         if (StringUtils.isNotEmpty(filterField)) {
             searchOperation = SearchCriteria.SearchOperation.find(filterOperation);
             if (searchOperation == null) {
-                return createWithStatusAndDesc(NOT_FOUND, FILTER_OPERATION_NOT_FOUND);
+                return createSearchResultOrganizationWithStatusAndDesc(NOT_FOUND, FILTER_OPERATION_NOT_FOUND);
             }
         }
         boolean defaultSort = sortType.equalsIgnoreCase("ASC");
@@ -202,42 +201,47 @@ public class OrganizationServiceImpl implements OrganizationService {
 
         List<Organization> organizations = organizationsPage.stream().toList();
         if (CollectionUtils.isEmpty(organizations)) {
-            return createWithStatusAndDesc(NOT_FOUND, ORGANIZATION_NOT_FOUND);
+            return createSearchResultOrganizationWithStatusAndDesc(NOT_FOUND, ORGANIZATION_NOT_FOUND);
         }
 
-        return createWithOk(makeSearchResult(organizations, organizations.size(), organizationsPage.getTotalPages(), organizationsPage.getTotalElements()));
+        List<OrganizationDTO> organizationDTOS = new ArrayList<>();
+        for (Organization organization: organizations) {
+            organizationDTOS.add(convert(organization));
+        }
+
+        return createOrganizationSearchResult(OK, null, organizationDTOS, organizations.size(), organizationsPage.getTotalPages(), organizationsPage.getTotalElements());
     }
 
     @Override
-    public Result<SearchResult<Organization>> findSubstring(int pageNum, int pageSize, String sortType, String sortColumn, String substring) {
+    public SearchResultOrganization findSubstring(int pageNum, int pageSize, String sortType, String sortColumn, String substring) {
         if (StringUtils.isEmpty(substring)) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, SUBSTRING_IS_NULL);
+            return createSearchResultOrganizationWithStatusAndDesc(INCORRECT_PARAMS, SUBSTRING_IS_NULL);
         }
         return getAll(pageNum, pageSize, sortType, sortColumn, SearchCriteria.SearchOperation.LIKE.getName(), "name", substring);
     }
 
     @Override
-    public Result<Integer> countLowerAnnualTurnover(Float annualTurnover) {
+    public ResultInteger countLowerAnnualTurnover(Float annualTurnover) {
         if (annualTurnover == null) {
-            return createWithStatusAndDesc(INCORRECT_PARAMS, ANNUAL_TURNOVER_IS_NULL);
+            return createIntegerWithStatusAndDesc(INCORRECT_PARAMS, ANNUAL_TURNOVER_IS_NULL);
         }
 
         List<Float> values = organizationRepository.findAnnualTurnoverLowerThan(annualTurnover);
         if (CollectionUtils.isEmpty(values)) {
-            return createWithStatus(NOT_FOUND);
+            return createIntegerWithStatusAndDesc(NOT_FOUND, FILTER_OPERATION_NOT_FOUND);
         }
 
-        return createWithOk(values.size());
+        return createIntegerWithOk(values.size());
     }
 
     @Override
-    public Result<List<Float>> findUniqueAnnualTurnover() {
+    public ResultListFloat findUniqueAnnualTurnover() {
         List<Float> values = organizationRepository.findUniqueAnnualTurnovers();
         if (CollectionUtils.isEmpty(values)) {
-            return createWithStatus(NOT_FOUND);
+            return createListFloatWithStatus(NOT_FOUND);
         }
 
-        return createWithOk(values);
+        return createListFloatWithOk(values);
     }
 
     private boolean validateColumns(String column) {
@@ -246,5 +250,28 @@ public class OrganizationServiceImpl implements OrganizationService {
                 || column.equalsIgnoreCase("annualTurnover")
                 || column.equalsIgnoreCase("creationDate")
                 || column.equalsIgnoreCase("type") || column.equalsIgnoreCase("officialAddress");
+    }
+
+    public static OrganizationDTO convert(Organization organization) {
+        OrganizationDTO organizationDTO = new OrganizationDTO();
+        organizationDTO.setId(organization.getId());
+        organizationDTO.setName(organization.getName());
+        organizationDTO.setCoordinateX(organization.getCoordinateX());
+        organizationDTO.setCoordinateY(organization.getCoordinateY());
+        organizationDTO.setCreationDate(convertToXMLGregorianCalendar(organization.getCreationDate()));
+        organizationDTO.setAnnualTurnover(organization.getAnnualTurnover());
+        organizationDTO.setType(OrganizationType.valueOf(organization.getType().name())); // todo npe
+        organizationDTO.setOfficialAddress(organization.getOfficialAddress());
+
+        return organizationDTO;
+    }
+
+    public static XMLGregorianCalendar convertToXMLGregorianCalendar(ZonedDateTime zonedDateTime) {
+        try {
+            DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
+            return datatypeFactory.newXMLGregorianCalendar(zonedDateTime.toString());
+        } catch (DatatypeConfigurationException e) {
+            return null;
+        }
     }
 }
