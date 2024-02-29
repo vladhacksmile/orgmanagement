@@ -36,13 +36,13 @@ public class OrganizationEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AddOrganizationRequest")
     @ResponsePayload
     public ResultOrganization add(@RequestPayload AddOrganizationRequest addOrganizationRequest) {
-        return organizationService.add(addOrganizationRequest.getEmployee());
+        return organizationService.add(addOrganizationRequest.getOrganization());
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "PutOrganizationRequest")
     @ResponsePayload
     public ResultOrganization put(@RequestPayload PutOrganizationRequest putOrganizationRequest) {
-        return organizationService.put(putOrganizationRequest.getEmployee());
+        return organizationService.put(putOrganizationRequest.getOrganization());
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "DeleteOrganizationByIdRequest")

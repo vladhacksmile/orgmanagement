@@ -190,7 +190,7 @@
     <xs:element name="AddOrganizationRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="employee" type="tns:OrganizationDTO"/>
+                <xs:element name="organization" type="tns:OrganizationDTO"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -198,7 +198,7 @@
     <xs:element name="PutOrganizationRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="employee" type="tns:OrganizationDTO"/>
+                <xs:element name="organization" type="tns:OrganizationDTO"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
