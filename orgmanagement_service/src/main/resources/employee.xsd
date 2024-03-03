@@ -325,4 +325,119 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="CountLowerAnnualTurnoverResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="xs:int"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UniqueAnnualTurnoversResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="xs:float" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="FindSubstringResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="objects" type="tns:OrganizationDTO" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="pageSize" type="xs:int"/>
+                <xs:element name="pageNum" type="xs:int"/>
+                <xs:element name="pageTotal" type="xs:int"/>
+                <xs:element name="totalElements" type="xs:long"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Рабочие -->
+    <xs:element name="GetAllEmployeesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="objects" type="tns:EmployeeDTO" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="pageSize" type="xs:int"/>
+                <xs:element name="pageNum" type="xs:int"/>
+                <xs:element name="pageTotal" type="xs:int"/>
+                <xs:element name="totalElements" type="xs:long"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAllByOrganizationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="objects" type="tns:EmployeeDTO" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="pageSize" type="xs:int"/>
+                <xs:element name="pageNum" type="xs:int"/>
+                <xs:element name="pageTotal" type="xs:int"/>
+                <xs:element name="totalElements" type="xs:long"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetEmployeeByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="tns:EmployeeDTO"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddEmployeeResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="tns:EmployeeDTO"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="PutEmployeeResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="tns:EmployeeDTO"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteEmployeeByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="tns:EmployeeDTO"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="MigrateEmployeesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="xs:int"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
 </xs:schema>

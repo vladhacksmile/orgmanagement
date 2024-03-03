@@ -9,10 +9,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class ResultHelper {
-
-    /**
-     * ЧТО УГОДНО СЮДА СУВАТЬ НЕЛЬЗЯ, ТОЛЬКО ОБЪЕКТ ИЗ wsdl
-     */
     public static ResultInteger createIntegerWithStatusAndDesc(Status status, StatusDescription statusDescription) {
         return createIntegerWithStatusAndDesc(status, statusDescription, 0);
     }

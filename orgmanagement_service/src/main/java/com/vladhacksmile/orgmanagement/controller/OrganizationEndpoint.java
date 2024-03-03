@@ -54,21 +54,21 @@ public class OrganizationEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "CountLowerAnnualTurnoverRequest")
     @ResponsePayload
-    public ResultInteger countLowerAnnualTurnover(@RequestPayload CountLowerAnnualTurnoverRequest countLowerAnnualTurnoverRequest) {
-        return organizationService.countLowerAnnualTurnover(countLowerAnnualTurnoverRequest.getAnnualTurnover());
+    public CountLowerAnnualTurnoverResponse countLowerAnnualTurnover(@RequestPayload CountLowerAnnualTurnoverRequest countLowerAnnualTurnoverRequest) {
+        return OrganizationsMapper.toCountLowerAnnualTurnoverResponse(organizationService.countLowerAnnualTurnover(countLowerAnnualTurnoverRequest.getAnnualTurnover()));
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "UniqueAnnualTurnoversRequest")
     @ResponsePayload
-    public ResultListFloat uniqueLowerAnnualTurnover(@RequestPayload UniqueAnnualTurnoversRequest uniqueAnnualTurnoversRequest) {
-        return organizationService.findUniqueAnnualTurnover();
+    public UniqueAnnualTurnoversResponse uniqueLowerAnnualTurnover(@RequestPayload UniqueAnnualTurnoversRequest uniqueAnnualTurnoversRequest) {
+        return OrganizationsMapper.toUniqueAnnualTurnoversResponse(organizationService.findUniqueAnnualTurnover());
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "FindSubstringRequest")
     @ResponsePayload
-    public SearchResultOrganization findSubstring(@RequestPayload FindSubstringRequest findSubstringRequest) {
-        return organizationService.findSubstring(findSubstringRequest.getPageNum(), findSubstringRequest.getPageSize(),
-                findSubstringRequest.getSortType(), findSubstringRequest.getSortColumn(), findSubstringRequest.getSubstring());
+    public FindSubstringResponse findSubstring(@RequestPayload FindSubstringRequest findSubstringRequest) {
+        return OrganizationsMapper.toFindSubstringResponse(organizationService.findSubstring(findSubstringRequest.getPageNum(), findSubstringRequest.getPageSize(),
+                findSubstringRequest.getSortType(), findSubstringRequest.getSortColumn(), findSubstringRequest.getSubstring()));
     }
 
 }

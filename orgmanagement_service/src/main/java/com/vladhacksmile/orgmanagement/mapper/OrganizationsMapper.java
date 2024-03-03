@@ -1,27 +1,9 @@
 package com.vladhacksmile.orgmanagement.mapper;
 
 import _8080.api.v1.orgservice.*;
-import com.vladhacksmile.orgmanagement.dto.OrganizationDTO;
-import com.vladhacksmile.orgmanagement.model.entity.Organization;
 
 
 public class OrganizationsMapper {
-    public static OrganizationDTO fromEntity(Organization organization) {
-        if (organization == null) {
-            return null;
-        }
-        OrganizationDTO organizationDTO = new OrganizationDTO();
-        organizationDTO.setId(organization.getId());
-        organizationDTO.setName(organization.getName());
-        organizationDTO.setCoordinateX(organization.getCoordinateX());
-        organizationDTO.setCoordinateY(organization.getCoordinateY());
-        organizationDTO.setCreationDate(organization.getCreationDate());
-        organizationDTO.setAnnualTurnover(organization.getAnnualTurnover());
-        organizationDTO.setType(organization.getType());
-        organizationDTO.setOfficialAddress(organization.getOfficialAddress());
-
-        return organizationDTO;
-    }
 
     public static GetAllOrganizationsResponse toGetAllOrganizationsResponse(SearchResultOrganization searchResultOrganization) {
         GetAllOrganizationsResponse result = new GetAllOrganizationsResponse();
@@ -65,6 +47,35 @@ public class OrganizationsMapper {
         result.setDescription(resultOrganization.getDescription());
         result.setStatus(resultOrganization.getStatus());
         result.setObject(resultOrganization.getObject());
+        return result;
+    }
+
+    public static CountLowerAnnualTurnoverResponse toCountLowerAnnualTurnoverResponse(ResultInteger resultInteger) {
+        CountLowerAnnualTurnoverResponse result = new CountLowerAnnualTurnoverResponse();
+        result.setDescription(resultInteger.getDescription());
+        result.setStatus(resultInteger.getStatus());
+        result.setObject(resultInteger.getObject());
+        return result;
+    }
+
+    public static UniqueAnnualTurnoversResponse toUniqueAnnualTurnoversResponse(ResultListFloat resultListFloat) {
+        UniqueAnnualTurnoversResponse result = new UniqueAnnualTurnoversResponse();
+        result.setDescription(resultListFloat.getDescription());
+        result.setStatus(resultListFloat.getStatus());
+        result.getObject().addAll(resultListFloat.getObject());
+        return result;
+    }
+
+    public static FindSubstringResponse toFindSubstringResponse(SearchResultOrganization searchResultOrganization) {
+        FindSubstringResponse result = new FindSubstringResponse();
+        result.setDescription(searchResultOrganization.getDescription());
+        result.setPageNum(searchResultOrganization.getPageNum());
+        result.setPageSize(searchResultOrganization.getPageSize());
+        result.setStatus(searchResultOrganization.getStatus());
+        result.setPageTotal(searchResultOrganization.getPageTotal());
+        result.setTotalElements(searchResultOrganization.getTotalElements());
+        result.getObjects().addAll(searchResultOrganization.getObjects());
+
         return result;
     }
 
