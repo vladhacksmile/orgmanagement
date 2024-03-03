@@ -1,6 +1,7 @@
 package com.vladhacksmile.orgmanagement.controller;
 
 import _8080.api.v1.orgservice.*;
+import com.vladhacksmile.orgmanagement.mapper.OrganizationsMapper;
 import com.vladhacksmile.orgmanagement.service.OrganizationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,35 +21,35 @@ public class OrganizationEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAllOrganizationsRequest")
     @ResponsePayload
-    public SearchResultOrganization getAll(@RequestPayload GetAllOrganizationsRequest getAllOrganizationsRequest) {
-        return organizationService.getAll(getAllOrganizationsRequest.getPageNum(),
+    public GetAllOrganizationsResponse getAll(@RequestPayload GetAllOrganizationsRequest getAllOrganizationsRequest) {
+        return OrganizationsMapper.toGetAllOrganizationsResponse(organizationService.getAll(getAllOrganizationsRequest.getPageNum(),
                 getAllOrganizationsRequest.getPageSize(), getAllOrganizationsRequest.getSortType(),
                 getAllOrganizationsRequest.getSortColumn(), getAllOrganizationsRequest.getFilterOperation(),
-                getAllOrganizationsRequest.getFilterField(), getAllOrganizationsRequest.getFilterValue());
+                getAllOrganizationsRequest.getFilterField(), getAllOrganizationsRequest.getFilterValue()));
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetOrganizationByIdRequest")
     @ResponsePayload
-    public ResultOrganization get(@RequestPayload GetOrganizationByIdRequest getOrganizationByIdRequest) {
-        return organizationService.get(getOrganizationByIdRequest.getId());
+    public GetOrganizationByIdResponse get(@RequestPayload GetOrganizationByIdRequest getOrganizationByIdRequest) {
+        return OrganizationsMapper.toGetOrganizationByIdRequest(organizationService.get(getOrganizationByIdRequest.getId()));
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AddOrganizationRequest")
     @ResponsePayload
-    public ResultOrganization add(@RequestPayload AddOrganizationRequest addOrganizationRequest) {
-        return organizationService.add(addOrganizationRequest.getOrganization());
+    public AddOrganizationResponse add(@RequestPayload AddOrganizationRequest addOrganizationRequest) {
+        return OrganizationsMapper.toAddOrganizationResponse(organizationService.add(addOrganizationRequest.getOrganization()));
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "PutOrganizationRequest")
     @ResponsePayload
-    public ResultOrganization put(@RequestPayload PutOrganizationRequest putOrganizationRequest) {
-        return organizationService.put(putOrganizationRequest.getOrganization());
+    public PutOrganizationResponse put(@RequestPayload PutOrganizationRequest putOrganizationRequest) {
+        return OrganizationsMapper.toPutOrganizationResponse(organizationService.put(putOrganizationRequest.getOrganization()));
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "DeleteOrganizationByIdRequest")
     @ResponsePayload
-    public ResultOrganization delete(@RequestPayload DeleteOrganizationByIdRequest deleteOrganizationByIdRequest) {
-        return organizationService.delete(deleteOrganizationByIdRequest.getId());
+    public DeleteOrganizationByIdResponse delete(@RequestPayload DeleteOrganizationByIdRequest deleteOrganizationByIdRequest) {
+        return OrganizationsMapper.toDeleteOrganizationByIdResponse(organizationService.delete(deleteOrganizationByIdRequest.getId()));
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "CountLowerAnnualTurnoverRequest")

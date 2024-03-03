@@ -269,4 +269,60 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+    <xs:element name="GetAllOrganizationsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="objects" type="tns:OrganizationDTO" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="pageSize" type="xs:int"/>
+                <xs:element name="pageNum" type="xs:int"/>
+                <xs:element name="pageTotal" type="xs:int"/>
+                <xs:element name="totalElements" type="xs:long"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetOrganizationByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="tns:OrganizationDTO"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddOrganizationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="tns:OrganizationDTO"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="PutOrganizationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="tns:OrganizationDTO"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteOrganizationByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="tns:OrganizationDTO"/>
+                <xs:element name="status" type="tns:Status"/>
+                <xs:element name="description" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
 </xs:schema>
