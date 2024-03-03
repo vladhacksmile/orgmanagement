@@ -224,11 +224,11 @@
             <xs:sequence>
                 <xs:element name="page_num" type="xs:int" default="1"/>
                 <xs:element name="page_size" type="xs:int" default="10"/>
-                <xs:element name="sortType" type="xs:string" default="ASC"/>
+                <xs:element name="sort_type" type="xs:string" default="ASC"/>
                 <xs:element name="sort_column" type="xs:string" default="id"/>
                 <xs:element name="filter_operation" type="xs:string" default=""/>
-                <xs:element name="filterField" type="xs:string" default=" "/>
-                <xs:element name="filterValue" type="xs:string" default=" "/>
+                <xs:element name="filter_field" type="xs:string" default=""/>
+                <xs:element name="filter_value" type="xs:string" default=""/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
