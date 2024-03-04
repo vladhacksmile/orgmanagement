@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: orgservice
-  profiles:
-    active: dev
-  config:
-    import: configserver:http://localhost:8788
