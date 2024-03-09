@@ -28,7 +28,7 @@ public class OrganizationManagerController {
         return organizationService.hire(organizationId, employee);
     }
 
-    @PatchMapping("/acquise/{organizationId1}/{organizationId2}")
+    @PostMapping("/acquise/{organizationId1}/{organizationId2}")
     public Result<?> acquise(@PathVariable("organizationId1") Long organizationId1, @PathVariable("organizationId2") Long organizationId2) {
         if (organizationId1 == null) {
             return Result.createWithStatusAndDesc(Status.INCORRECT_PARAMS, StatusDescription.ORGANIZATION_ID_IS_NULL);
