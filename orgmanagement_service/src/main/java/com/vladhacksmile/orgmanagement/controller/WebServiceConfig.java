@@ -21,8 +21,8 @@ import java.util.Properties;
 public class WebServiceConfig extends WsConfigurerAdapter {
 
     @Bean
-    public SoapFaultMappingExceptionResolver exceptionResolver(){
-        SoapFaultMappingExceptionResolver exceptionResolver = new SoapFaultMappingExceptionResolver();// new DetailSoapFaultDefinitionExceptionResolver();
+    public SoapFaultMappingExceptionResolver exceptionResolver() {
+        SoapFaultMappingExceptionResolver exceptionResolver = new SoapFaultMappingExceptionResolver();
 
         SoapFaultDefinition faultDefinition = new SoapFaultDefinition();
         faultDefinition.setFaultCode(SoapFaultDefinition.SERVER);
@@ -30,11 +30,11 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 
         Properties errorMappings = new Properties();
         errorMappings.setProperty(Exception.class.getName(), SoapFaultDefinition.SERVER.toString());
-//        errorMappings.setProperty(ServiceFaultException.class.getName(), SoapFaultDefinition.SERVER.toString());
         exceptionResolver.setExceptionMappings(errorMappings);
         exceptionResolver.setOrder(1);
         return exceptionResolver;
     }
+
     @Bean
     public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(ApplicationContext applicationContext) {
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();

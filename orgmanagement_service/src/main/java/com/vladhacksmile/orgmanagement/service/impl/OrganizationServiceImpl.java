@@ -261,7 +261,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         organizationDTO.setCoordinateY(organization.getCoordinateY());
         organizationDTO.setCreationDate(convertToXMLGregorianCalendar(organization.getCreationDate()));
         organizationDTO.setAnnualTurnover(organization.getAnnualTurnover());
-        organizationDTO.setType(organization.getType() != null ? OrganizationType.valueOf(organization.getType().name()) : null); // todo npe
+        organizationDTO.setType(organization.getType() != null ? OrganizationType.valueOf(organization.getType().name()) : null);
         organizationDTO.setOfficialAddress(organization.getOfficialAddress());
 
         return organizationDTO;
